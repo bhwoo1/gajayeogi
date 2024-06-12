@@ -13,7 +13,7 @@
     width: 0;
     height: 4px;
     bottom: 0;
-    background-color: #8a3ab9; /* 변경 가능 */
+    background-color: #0b921d; /* 변경 가능 */
     transition: width 0.3s ease-in-out;
   }
   

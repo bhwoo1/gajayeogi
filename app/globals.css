@@ -1,6 +1,14 @@
+@font-face {
+  font-family: "H2HDRM";
+  font-weight: 200;
+  src: url("/fonts/H2HDRM.ttf") format("truetype");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 /* :root {
   --foreground-rgb: 0, 0, 0;

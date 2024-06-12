@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./components/Providers";
 import NavBar from "./components/layout/NavBar";
+import RecoilContextProvider from "./recoil/RecoilContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>
-          <NavBar />
-          {children}
-        </Providers>
+      <body 
+        className={inter.className}
+      >
+        <RecoilContextProvider>
+          <Providers>
+            <NavBar />
+            {children}
+          </Providers>
+        </RecoilContextProvider>
       </body>
     </html>
   );
