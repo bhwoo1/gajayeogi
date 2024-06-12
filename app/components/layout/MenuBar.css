@@ -1,0 +1,33 @@
+.hoverable-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    line-height: 2;
+  }
+  
+  .hoverable-link::before,
+  .hoverable-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 4px;
+    bottom: 0;
+    background-color: #8a3ab9; /* 변경 가능 */
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .hoverable-link::before {
+    left: 50%;
+    transform-origin: right;
+  }
+  
+  .hoverable-link::after {
+    right: 50%;
+    transform-origin: left;
+  }
+  
+  .hoverable-link:hover::before,
+  .hoverable-link:hover::after {
+    width: 50%;
+  }
