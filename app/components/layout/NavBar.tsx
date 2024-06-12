@@ -1,12 +1,15 @@
 "use client"
 
+import { PageAtom } from "@/app/recoil/RecoilContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import { useRecoilState } from "recoil";
 
 
 const NavBar:React.FC = () => {
     const {data: session} = useSession();
+    const [currentPage, setCurrentPage] = useRecoilState(PageAtom);
 
     const loginBtnClick = async () => {
         await signIn("naver", { redirect: true, callbackUrl: "/" });
@@ -17,7 +20,7 @@ const NavBar:React.FC = () => {
     return(
         <header className="fixed left-0 right-0 top-0 py-4 z-50 user-not-selectable">
         <nav className="container mx-auto flex items-center justify-between">
-            <Link href="/"><img src="/gajayeogi.png" alt="logo" width='150' height='30' /></Link>
+            <Link href="/"><img src="/gajayeogi.png" alt="logo" width='150' height='30' onClick={() => setCurrentPage('home')}/></Link>
             <ul className="flex items-center justify-end space-x-4">
             {session ? 
                     (   
