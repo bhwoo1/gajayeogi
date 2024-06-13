@@ -36,7 +36,7 @@ const NavBar:React.FC = () => {
                                         </div>
                                     </li>
                                     <li>
-                                        <p className="font-bold">{session?.user?.name} 님</p>
+                                        <p className="font-bold">{session?.user?.name}</p>
                                     </li>
                                 </ul>
                             </Link>

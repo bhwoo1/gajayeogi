@@ -28,15 +28,15 @@ const NaverMap = () => {
                     zoom: 18,
                 });
 
-                const point = new window.naver.maps.Point(userLocation.longitude, userLocation.latitude);
-                const marker = new window.naver.maps.Marker({
-                    position: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
-                    map: map,
-                    icon: {
-                        content: '<div style="width: 10px; height: 10px; background-color: blue; border-radius: 50%;"></div>',
-                        anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정
-                    },
-                });
+                // const point = new window.naver.maps.Point(userLocation.longitude, userLocation.latitude);
+                // const marker = new window.naver.maps.Marker({
+                //     position: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
+                //     map: map,
+                //     icon: {
+                //         content: '<div style="width: 10px; height: 10px; background-color: blue; border-radius: 50%;"></div>',
+                //         anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정
+                //     },
+                // });
             }
         };
 
@@ -63,16 +63,16 @@ const NaverMap = () => {
                 zoom: 18,
             });
 
-            // Add point for user's current location
-            const point = new window.naver.maps.Point(longitude, latitude);
-            const marker = new window.naver.maps.Marker({
-                position: new window.naver.maps.LatLng(latitude, longitude),
-                map: map,
-                icon: {
-                    content: '<div style="width: 10px; height: 10px; background-color: blue; border-radius: 50%; "></div>',
-                    anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정합니다.
-                },
-            });
+            // // Add point for user's current location
+            // const point = new window.naver.maps.Point(longitude, latitude);
+            // const marker = new window.naver.maps.Marker({
+            //     position: new window.naver.maps.LatLng(latitude, longitude),
+            //     map: map,
+            //     icon: {
+            //         content: '<div style="width: 10px; height: 10px; background-color: blue; border-radius: 50%; "></div>',
+            //         anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정합니다.
+            //     },
+            // });
         }
     };
 
