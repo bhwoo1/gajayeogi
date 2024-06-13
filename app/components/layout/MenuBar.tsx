@@ -11,9 +11,27 @@ const MenuBar:React.FC = () => {
 
     return(
         <div className="w-full h-full p-4 flex flex-row justify-start">
-            <Link href="/"><div className="pr-24 " onClick={() => setCurrentPage('home')}><p className={currentPage === 'home' ? `font-black text-xl cursor-pointer` : `text-l font-gray-500`}>홈</p></div></Link>
-            <Link href="/A"><div className="pr-24 " onClick={() => setCurrentPage('A')}><p className={currentPage === 'A' ? `font-black text-xl cursor-pointer` : `text-l font-gray-400`}>어쩌구</p></div></Link>
-            <Link href="/B"><div className="pr-24 " onClick={() => setCurrentPage('B')}><p className={currentPage === 'B' ? `font-black text-xl cursor-pointer` : `text-l font-gray-400`}>저쩌구</p></div></Link>
+             <Link href="/">
+                <div className="pr-24 cursor-pointer" onClick={() => setCurrentPage('home')}>
+                    <p className={currentPage === 'home' ? 'font-bold text-xl text-gray-800' : 'text-base text-gray-500 hover:text-gray-700'}>
+                        홈
+                    </p>
+                </div>
+            </Link>
+            <Link href="/A">
+                <div className="pr-24 cursor-pointer" onClick={() => setCurrentPage('A')}>
+                    <p className={currentPage === 'A' ? 'font-bold text-xl text-gray-800' : 'text-base text-gray-500 hover:text-gray-700'}>
+                        어쩌구
+                    </p>
+                </div>
+            </Link>
+            <Link href="/B">
+                <div className="pr-24 cursor-pointer" onClick={() => setCurrentPage('B')}>
+                    <p className={currentPage === 'B' ? 'font-bold text-xl text-gray-800' : 'text-base text-gray-500 hover:text-gray-700'}>
+                        저쩌구
+                    </p>
+                </div>
+            </Link>
         </div>
     );
 }

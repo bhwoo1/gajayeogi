@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import { useRecoilState } from "recoil";
+import Image from "next/image";
 
 
 const NavBar:React.FC = () => {
@@ -25,18 +26,29 @@ const NavBar:React.FC = () => {
             {session ? 
                     (   
                         <ul className="flex items-center justify-end space-x-4">
+                            <Link href="/mypage">
+                                <ul className="cursor-pointer flex items-center justify-end space-x-4">
+                                    <li>
+                                        <div className="rounded-full overflow-hidden">
+                                            {session?.user?.image &&
+                                                <Image src={`${session?.user.image}`} alt="main" width={30} height={30} />
+                                            }
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <p className="font-bold">{session?.user?.name} 님</p>
+                                    </li>
+                                </ul>
+                            </Link>
                             <li>
-                                <Link href="/mypage"><p className="text-white cursor-pointer font-bold">{session?.user?.name} 님</p></Link>
-                            </li>
-                            <li>
-                                <button onClick={() => signOut()}><p>로그아웃</p></button>
+                                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={() => signOut()}><p>로그아웃</p></button>
                             </li>
                         </ul>
                     ) 
                 : 
                     (
                         <li>
-                            <button onClick={loginBtnClick}><p>로그인</p></button>
+                            <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={loginBtnClick}><p>로그인</p></button>
                         </li>
                     )
                 }
