@@ -27,14 +27,13 @@ const NaverMap = () => {
                     zoom: 10,
                 });
 
-                // Add point for user's current location
                 const point = new window.naver.maps.Point(userLocation.longitude, userLocation.latitude);
                 const marker = new window.naver.maps.Marker({
                     position: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
                     map: map,
                     icon: {
                         content: '<div style="width: 10px; height: 10px; background-color: red; border-radius: 50%;"></div>',
-                        anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정합니다.
+                        anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정
                     },
                 });
             }
@@ -48,7 +47,7 @@ const NaverMap = () => {
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
-                    initializeMap(); // Fallback to default location
+                    initializeMap();
                 }
             );
         } else {
