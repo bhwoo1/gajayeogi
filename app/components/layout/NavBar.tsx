@@ -29,7 +29,7 @@ const NavBar:React.FC = () => {
                             <Link href="/mypage">
                                 <ul className="cursor-pointer flex items-center justify-end space-x-4">
                                     <li>
-                                        <div className="rounded-full overflow-hidden">
+                                        <div className="rounded-full overflow-hidden border-gray-300 border-2">
                                             {session?.user?.image &&
                                                 <Image src={`${session?.user.image}`} alt="main" width={30} height={30} />
                                             }

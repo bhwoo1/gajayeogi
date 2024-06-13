@@ -12,7 +12,8 @@ const NaverMap = () => {
     useEffect(() => {
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
-            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
+            // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
+            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv`;
             script.async = true;
             script.onload = () => {
                 initializeMap();
@@ -24,7 +25,7 @@ const NaverMap = () => {
             if (mapElement.current && window.naver && window.naver.maps) {
                 const map = new window.naver.maps.Map(mapElement.current, {
                     center: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
-                    zoom: 10,
+                    zoom: 18,
                 });
 
                 const point = new window.naver.maps.Point(userLocation.longitude, userLocation.latitude);
@@ -32,7 +33,7 @@ const NaverMap = () => {
                     position: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
                     map: map,
                     icon: {
-                        content: '<div style="width: 10px; height: 10px; background-color: red; border-radius: 50%;"></div>',
+                        content: '<div style="width: 10px; height: 10px; background-color: blue; border-radius: 50%;"></div>',
                         anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정
                     },
                 });
