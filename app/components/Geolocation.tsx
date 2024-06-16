@@ -18,6 +18,7 @@ const Geolocation = () => {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
               });
+              
             },
             (error) => {
               setError(error.message);
@@ -27,11 +28,12 @@ const Geolocation = () => {
           setError("현재 브라우저에서는 Geolocation을 지원하지 않습니다.");
         }
       };
+
   
       getLocation();
     }, []);
 
-  return null;    
+  return null; 
 }
 
 export default Geolocation;

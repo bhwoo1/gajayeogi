@@ -24,6 +24,11 @@ const NaverMap = () => {
         const initializeMap = () => {
             if (mapElement.current && window.naver && window.naver.maps) {
                 const map = new window.naver.maps.Map(mapElement.current, {
+                    scaleControl: true,
+                    logoControl: true,
+                    mapDataControl: true,
+                    zoomControl: false,
+                    minZoom: 6,
                     center: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
                     zoom: 18,
                 });
@@ -56,9 +61,16 @@ const NaverMap = () => {
         }
     }, []);
 
+
+    
     const initializeMapWithLocation = (latitude: number, longitude: number) => {
         if (mapElement.current && window.naver && window.naver.maps) {
             const map = new window.naver.maps.Map(mapElement.current, {
+                scaleControl: true,
+                logoControl: true,
+                mapDataControl: true,
+                zoomControl: false,
+                minZoom: 6,
                 center: new window.naver.maps.LatLng(latitude, longitude),
                 zoom: 18,
             });
