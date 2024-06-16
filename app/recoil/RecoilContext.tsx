@@ -16,6 +16,15 @@ export const UserLocationAtom = atom({
         longitude: 126.9780 // 경도
         // default: 서울시청 좌표
     }
+});
+
+// 사용자가 선택한 위치
+export const selectedLocationAtom = atom({
+    key: "SelectedLocationState",
+    default: {
+        latitude: 0.0, // 위도
+        longitude: 0.0 // 경도
+    }
 })
 
 export default function RecoilContextProvider({ children }: { children: React.ReactNode }) {
