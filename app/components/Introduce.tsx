@@ -1,5 +1,6 @@
 import React from "react";
 
+// 메인 화면에 프로젝트 설명을 적는 곳
 const Introduce = () => {
 
     return(

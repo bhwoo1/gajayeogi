@@ -1,6 +1,8 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa"; 
 
+
+// 검색창 컴포넌트
 const Search = () => {
     return(
         <div className="w-full mx-auto ">
