@@ -7,13 +7,13 @@ import { UserLocationAtom } from '../recoil/RecoilContext';
 const NaverMap = () => {
     const userLocation = useRecoilValue(UserLocationAtom);
     const mapElement = useRef<HTMLDivElement>(null);
-    const naverMapApiKey = process.env.NAVER_MAP_CLIENT_ID;
+    const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
 
     useEffect(() => {
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
-            // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
-            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv`;
+             script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
+            // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv`;
             script.async = true;
             script.onload = () => {
                 initializeMap();
