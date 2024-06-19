@@ -1,6 +1,7 @@
 "use client"
 
 import { RecoilRoot, atom } from "recoil";
+import { Location } from "../Type";
 
 // 페이지
 export const PageAtom = atom({
@@ -9,7 +10,7 @@ export const PageAtom = atom({
 });
 
 // 사용자의 현재 위치
-export const UserLocationAtom = atom({
+export const UserLocationAtom = atom<Location>({
     key: "UserLocationState",
     default: {
         latitude: 37.5665, // 위도
@@ -19,7 +20,7 @@ export const UserLocationAtom = atom({
 });
 
 // 사용자가 선택한 위치
-export const selectedLocationAtom = atom({
+export const selectedLocationAtom = atom<Location>({
     key: "SelectedLocationState",
     default: {
         latitude: 0.0, // 위도
