@@ -19,7 +19,7 @@ const NavBar:React.FC = () => {
     }
 
     return(
-        <header className="fixed left-0 right-0 top-0 py-4 z-50 user-not-selectable">
+        <header className="fixed left-0 right-0 top-0 py-4 z-50 user-not-selectable bg-white">
         <nav className="container mx-auto flex items-center justify-between">
             <Link href="/"><img src="/gajayeogi.png" alt="logo" width='150' height='30' onClick={() => setCurrentPage('home')}/></Link>
             <ul className="flex items-center justify-end space-x-4">

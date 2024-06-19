@@ -19,14 +19,20 @@ export const UserLocationAtom = atom<Location>({
     }
 });
 
-// 사용자가 선택한 위치
+// 사용자가 선택한 위치 좌표
 export const selectedLocationAtom = atom<Location>({
     key: "SelectedLocationState",
     default: {
         latitude: 0.0, // 위도
         longitude: 0.0 // 경도
     }
-})
+});
+
+// 사용자가 선택한 위치 주소
+export const selectedAddressAtom = atom({
+    key: "SelectedAddressState",
+    default: ""
+});
 
 export default function RecoilContextProvider({ children }: { children: React.ReactNode }) {
     return <RecoilRoot>{children}</RecoilRoot>;
