@@ -81,7 +81,15 @@ const Registration: React.FC = () => {
                         <div className="flex flex-col">
                             <label htmlFor="attractioncategory" className="mb-2 font-medium text-gray-700">카테고리:</label>
                             <select className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" id="attractioncategory" name="attractioncategory" value={attraction.attractioncategory} onChange={(e) => setAttraction({ ...attraction, attractioncategory: e.target.value })}>
-                                <option value="all">전체</option>
+                                <option value="">관광지</option>
+                                <option>문화시설</option>
+                                <option>축제공연행사</option>
+                                <option>여행코스</option>
+                                <option>레포츠</option>
+                                <option>숙박</option>
+                                <option>쇼핑</option>
+                                <option>음식점</option>
+                                <option>교통</option>
                             </select>
                         </div>
                         <div className="flex flex-col">
