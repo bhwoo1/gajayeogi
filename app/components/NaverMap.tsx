@@ -9,12 +9,12 @@ const NaverMap = () => {
     const userLocation = useRecoilValue(UserLocationAtom);
     const mapElement = useRef<HTMLDivElement>(null);
     const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
-    const [showConnectionInfo, setShowConnectionInfo] = useState(false);
+    //const [showConnectionInfo, setShowConnectionInfo] = useState(false);
 
     useEffect(() => {
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
-             script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
+            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
             // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv`;
             script.async = true;
             script.onload = () => {

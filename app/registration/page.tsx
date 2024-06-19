@@ -1,8 +1,10 @@
 "use client"
 
-import { useSession } from "next-auth/react";
-import React, { ChangeEvent, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Attraction } from "../Type";
+import MapModal from "../components/MapModal";
+import Geolocation from "../components/Geolocation";
 
 const initialAttractionState: Attraction = {
     attractionimages: [],
@@ -14,7 +16,15 @@ const initialAttractionState: Attraction = {
 
 const Registration: React.FC = () => {
     const [attraction, setAttraction] = useState<Attraction>(initialAttractionState);
+    const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
     const { data: session, status: sessionStatus } = useSession();
+
+    useEffect(() => {
+        if (sessionStatus === "loading") return; // 세션 로딩 중일 때는 아무것도 하지 않음
+        if (!session) {
+          signIn("naver", { redirect: true });
+        }
+      }, [session, sessionStatus]);
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -37,8 +47,14 @@ const Registration: React.FC = () => {
         }));
     };
 
+    const handleMapButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setIsMapModalOpen(true);
+    };
+
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-20">
+            <Geolocation />
             {session ? 
                 <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-lg">
                     <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">관광지 등록</h2>
@@ -71,6 +87,7 @@ const Registration: React.FC = () => {
                         <div className="flex flex-col">
                             <label htmlFor="attractionlocation" className="mb-2 font-medium text-gray-700">위치:</label>
                             <input type="text" id="attractionlocation" name="attractionlocation" value={attraction.attractionlocation} onChange={(e) => setAttraction({ ...attraction, attractionlocation: e.target.value })} className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <button onClick={handleMapButtonClick} className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 mt-2 rounded" ><p>지도에서 선택</p></button>
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="description" className="mb-2 font-medium text-gray-700">설명:</label>
@@ -84,6 +101,11 @@ const Registration: React.FC = () => {
                     <p className='font-semibold text-gray-700'>로그인이 필요합니다.</p>
                 </div>
             }
+            <MapModal 
+                isOpen={isMapModalOpen} 
+                onClose={() => setIsMapModalOpen(false)} 
+                //onSelectLocation={handleSelectLocation} 
+            />
         </main>
     );
 }
