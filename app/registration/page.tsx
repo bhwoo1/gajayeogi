@@ -65,8 +65,8 @@ const Registration: React.FC = () => {
                                 {attraction.attractionimages.map((image, index) => (
                                     <div key={index} className="relative w-32 h-32">
                                         <img src={URL.createObjectURL(image)} alt={`상품 이미지 ${index + 1}`} className="w-full h-full object-cover rounded-md" />
-                                        <button type="button" onClick={() => handleRemoveImage(index)} className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1">
-                                            X
+                                        <button type="button" onClick={() => handleRemoveImage(index)} className="absolute top-0 right-0 bg-red-500 text-white rounded-sm p-1">
+                                            <p className="font-bold">X</p>
                                         </button>
                                     </div>
                                 ))}
