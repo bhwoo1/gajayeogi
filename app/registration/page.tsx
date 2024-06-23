@@ -52,6 +52,13 @@ const Registration: React.FC = () => {
         setIsMapModalOpen(true);
     };
 
+    const handleSelectLocation = (location: { lat: number, lng: number }) => {
+        setAttraction(prevAttraction => ({
+          ...prevAttraction,
+          attractionlocation: `${location.lat}, ${location.lng}`
+        }));
+      };
+
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-20">
             <Geolocation />
@@ -112,7 +119,7 @@ const Registration: React.FC = () => {
             <MapModal 
                 isOpen={isMapModalOpen} 
                 onClose={() => setIsMapModalOpen(false)} 
-                //onSelectLocation={handleSelectLocation} 
+                onSelectLocation={handleSelectLocation} 
             />
         </main>
     );

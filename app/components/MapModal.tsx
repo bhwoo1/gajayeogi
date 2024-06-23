@@ -1,18 +1,20 @@
 import React, { useEffect, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
-import { UserLocationAtom } from '../recoil/RecoilContext';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { UserLocationAtom, selectedLocationAtom } from '../recoil/RecoilContext';
 import Geolocation from './Geolocation';
 
 interface MapModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // onSelectLocation: (location: { lat: number; lng: number }) => void;
+  onSelectLocation: (Location: { lat: number; lng: number }) => void;
 }
 
-const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
+const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onSelectLocation }) => {
   const mapElement = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
+  const markerInstance = useRef<any>(null);
   const userLocation = useRecoilValue(UserLocationAtom);
+  const [selectedLocation, setSelectedLocation] = useRecoilState(selectedLocationAtom);
   const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
 
   useEffect(() => {
@@ -40,8 +42,17 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
           window.naver.maps.Event.addListener(mapInstance.current, 'click', (e: any) => {
             const lat = e.coord.lat();
             const lng = e.coord.lng();
-            // onSelectLocation({ lat, lng });
-            onClose(); // 위치 선택 후 모달 닫기
+            setSelectedLocation({ 
+              latitude: lat, 
+              longitude: lng 
+            });
+            if (markerInstance.current) {
+              markerInstance.current.setMap(null);
+            }
+            markerInstance.current = new window.naver.maps.Marker({
+              position: new window.naver.maps.LatLng(lat, lng),
+              map: mapInstance.current,
+            });
           });
         }
       };
@@ -56,11 +67,25 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const handleConfirm = () => {
+    if (selectedLocation && markerInstance.current) {
+      onSelectLocation({
+        lat: selectedLocation.latitude,
+        lng: selectedLocation.longitude,
+      });
+      onClose();
+    }
+    else {
+      alert("위치를 선택해주세요.");
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div className="bg-white p-4 rounded shadow-lg w-3/4 h-3/4 relative">
             <button onClick={onClose} className="absolute top-2 right-2">x</button>
-            <div ref={mapElement} style={{ width: '100%', height: '100%' }} className='mt-2'/>
+            <div ref={mapElement} style={{ width: '100%', height: '90%' }} className='mt-2'/>
+            <button onClick={handleConfirm} className="bg-green-600 hover:bg-green-700 text-white w-full font-bold py-2 px-4 mt-2 rounded">위치 선택</button>
         </div>
     </div>
   );
