@@ -5,11 +5,17 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { Attraction } from "../Type";
 import MapModal from "../components/MapModal";
 import Geolocation from "../components/Geolocation";
+import { useRecoilState } from "recoil";
+import { selectedAddressAtom } from "../recoil/RecoilContext";
 
 const initialAttractionState: Attraction = {
     attractionimages: [],
     attractionname: "",
-    attractionlocation: "",
+    attractionlocation: {
+        latitude: 0.0,
+        longitude: 0.0
+    },
+    attractionaddress: "",
     attractioncategory: "",
     attractionexplain: ""
 }
@@ -18,6 +24,11 @@ const Registration: React.FC = () => {
     const [attraction, setAttraction] = useState<Attraction>(initialAttractionState);
     const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
     const { data: session, status: sessionStatus } = useSession();
+    const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
+    const naverMapApiSecret = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_SECRET;
+    const [selectedAddress, setSelectedAddress] = useRecoilState(selectedAddressAtom);
+    
+    
 
     useEffect(() => {
         if (sessionStatus === "loading") return; // 세션 로딩 중일 때는 아무것도 하지 않음
@@ -55,9 +66,15 @@ const Registration: React.FC = () => {
     const handleSelectLocation = (location: { lat: number, lng: number }) => {
         setAttraction(prevAttraction => ({
           ...prevAttraction,
-          attractionlocation: `${location.lat}, ${location.lng}`
+          attractionlocation: {
+            latitude: location.lat,
+            longitude: location.lng
+          }
         }));
-      };
+    };
+
+
+    
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-20">
@@ -100,8 +117,8 @@ const Registration: React.FC = () => {
                             </select>
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="attractionlocation" className="mb-2 font-medium text-gray-700">위치:</label>
-                            <input type="text" id="attractionlocation" name="attractionlocation" value={attraction.attractionlocation} onChange={(e) => setAttraction({ ...attraction, attractionlocation: e.target.value })} className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <label htmlFor="attractionaddress" className="mb-2 font-medium text-gray-700">위치:</label>
+                            <input type="text" id="attractionaddress" name="attractionaddress" value={`${attraction.attractionlocation.latitude}, ${attraction.attractionlocation.longitude}`} onChange={(e) => setAttraction({ ...attraction, attractionaddress: e.target.value })} className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <button onClick={handleMapButtonClick} className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 mt-2 rounded" ><p>지도에서 선택</p></button>
                         </div>
                         <div className="flex flex-col">

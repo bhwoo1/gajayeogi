@@ -1,7 +1,8 @@
 export type Attraction = {
     attractionimages: File[],
     attractionname: string,
-    attractionlocation: string,
+    attractionlocation: Location,
+    attractionaddress: string,
     attractioncategory: string,
     attractionexplain: string
 }
