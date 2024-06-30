@@ -5,7 +5,7 @@ import MenuBar from "./components/layout/MenuBar";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      <MenuBar />
+      <MenuBar currentPage={"home"} />
       <Geolocation />
       <Introduce />
     </main>

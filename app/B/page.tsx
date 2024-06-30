@@ -5,7 +5,7 @@ import Link from "next/link";
 const B:React.FC = () => {
     return(
         <main className="flex min-h-screen flex-col items-center p-24">
-            <MenuBar />
+            <MenuBar currentPage={"B"} />
             <Link href="/registration"><button>등록하기</button></Link>
         </main>
     );

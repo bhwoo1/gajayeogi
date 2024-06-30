@@ -3,12 +3,6 @@
 import { RecoilRoot, atom } from "recoil";
 import { Location } from "../Type";
 
-// 페이지
-export const PageAtom = atom({
-    key: "PageState",
-    default: "home"
-});
-
 // 사용자의 현재 위치
 export const UserLocationAtom = atom<Location>({
     key: "UserLocationState",

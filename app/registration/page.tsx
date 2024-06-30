@@ -73,7 +73,7 @@ const Registration: React.FC = () => {
           }
         }));
 
-        reverseGeocode();
+        //reverseGeocode();
     };
 
     const reverseGeocode = async () => {
