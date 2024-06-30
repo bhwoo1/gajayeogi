@@ -24,14 +24,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        {/* <Script
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`}
           strategy="beforeInteractive"
-        />
+        /> */}
         <Script
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`}
           strategy="beforeInteractive"
         />
+        {/* <script type="text/javascript" src={`https://openapi.map.naver.com/openapi/v3/maps.js?clientId=${naverMapApiKey}&submodules=geocoder`}></script> */}
       </head>
       <body className={inter.className}>
         <RecoilContextProvider>

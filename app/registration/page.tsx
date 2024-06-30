@@ -7,6 +7,7 @@ import MapModal from "../components/MapModal";
 import Geolocation from "../components/Geolocation";
 import { useRecoilState } from "recoil";
 import { selectedAddressAtom } from "../recoil/RecoilContext";
+import axios from "axios";
 
 const initialAttractionState: Attraction = {
     attractionimages: [],
@@ -71,8 +72,67 @@ const Registration: React.FC = () => {
             longitude: location.lng
           }
         }));
+
+        reverseGeocode();
     };
 
+    const reverseGeocode = async () => {
+        // try {
+        //     // const response = await fetch(`https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${attraction.attractionlocation.longitude},${attraction.attractionlocation.latitude}&output=json`, {
+        //     const response = await fetch(`https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${attraction.attractionlocation.longitude},${attraction.attractionlocation.latitude}&sourcecrs=epsg:4326&orders=roadaddr&output=json`, {
+        //         headers: {
+        //             'X-NCP-APIGW-API-KEY-ID': process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID as string,
+        //             'X-NCP-APIGW-API-KEY': process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_SECRET as string,
+        //         },
+        //         mode: 'no-cors'
+        //     });
+            
+        //     // if (!response.ok) {
+        //     //     throw new Error('리버스 지오코딩 요청 실패');
+        //     // }
+            
+        //     const data = await response.json();
+        //     const address = data.results[0].region.area1.name + ' ' + data.results[0].region.area2.name + ' ' + data.results[0].land.address;
+        //     console.log(address);
+        //     setSelectedAddress(address);
+        //     setAttraction(prevAttraction => ({
+        //         ...prevAttraction,
+        //         attractionaddress: address
+        //     }));
+        // } catch (error) {
+        //     console.error('리버스 지오코딩 에러:', error);
+        //     alert('주소 변환에 실패했습니다.');
+        // }
+
+        try {
+            const response = await axios.get(`https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc`, {
+                params: {
+                    coords: `${attraction.attractionlocation.longitude},${attraction.attractionlocation.latitude}`,
+                    sourcecrs: 'epsg:4326',
+                    orders: 'roadaddr',
+                    output: 'json'
+                },
+                headers: {
+                    'X-NCP-APIGW-API-KEY-ID': process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID,
+                    'X-NCP-APIGW-API-KEY': process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_SECRET,
+                },
+                // By default, axios performs a CORS check and sets mode: 'cors', 
+                // so we do not need to specify 'mode: no-cors' like in fetch
+            });
+        
+            const data = response.data;
+            const address = data.results[0].region.area1.name + ' ' + data.results[0].region.area2.name + ' ' + data.results[0].land.address;
+            console.log(address);
+            setSelectedAddress(address);
+            setAttraction(prevAttraction => ({
+                ...prevAttraction,
+                attractionaddress: address
+            }));
+        } catch (error) {
+            console.error('리버스 지오코딩 에러:', error);
+            alert('주소 변환에 실패했습니다.');
+        }
+    };
 
     
 
