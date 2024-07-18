@@ -77,48 +77,106 @@ const MapModal: React.FC<MapModalProps> = ({
           longitude: lng
         });
 
-        if (markerInstance.current) {
-          markerInstance.current.setMap(null);
-        }
+        // if (markerInstance.current) {
+        //   markerInstance.current.setMap(null);
+        // }
 
-        markerInstance.current = new naver.maps.Marker({
-          position: new naver.maps.LatLng(lat, lng),
-          map: map
-        });
+        // markerInstance.current = new naver.maps.Marker({
+        //   position: new naver.maps.LatLng(lat, lng),
+        //   map: map
+        // });
 
         // // 역 지오코딩 함수 호출
-        // searchCoordinateToAddress(new naver.maps.LatLng(lat, lng));
+        //searchCoordinateToAddress(new naver.maps.LatLng(lat, lng));
+
+        naver.maps.Service.reverseGeocode(
+              {
+                coords: new naver.maps.LatLng(lat, lng)
+              },
+              function (status: any, response: any) {
+                if (status !== naver.maps.Service.Status.OK) {
+                  console.error('Reverse geocoding failed:', status);
+                  return;
+                }
+      
+                var result = response.v2; // Naver Maps API 문서에 따라 'v2'로 가정
+                var items = result.results;
+                var address = result.address;
+      
+                setSelectedAddress(address); // 선택된 주소 업데이트
+                console.log('Reverse geocoding result:', address);
+              }
+            );
+          
+
         
+        const infoWindow = new naver.maps.InfoWindow({ content: '', borderWidth: 0 });
+
+        infoWindow.setContent(
+          ['<div style="padding:10px;min-width:200px;line-height:150%;">', '아아아아아', '</div>'].join('')
+        );
+
+        infoWindow.open(map, new naver.maps.LatLng(lat, lng));
       });
     }
   };
 
-  // const searchCoordinateToAddress = (latlng: any) => {
+  const searchCoordinateToAddress = (latlng: any) => {
     
-  //   if (naver.maps.Service) {
-  //     console.log('Reverse geocoding...');
-  //     naver.maps.Service.reverseGeocode(
-  //       {
-  //         coords: latlng
-  //       },
-  //       function (status: any, response: any) {
-  //         if (status !== naver.maps.Service.Status.OK) {
-  //           console.error('Reverse geocoding failed:', status);
-  //           return;
-  //         }
+    // if (naver.maps.Service) {
+    //   console.log('Reverse geocoding...');
+    //   naver.maps.Service.reverseGeocode(
+    //     {
+    //       coords: latlng
+    //     },
+    //     function (status: any, response: any) {
+    //       if (status !== naver.maps.Service.Status.OK) {
+    //         console.error('Reverse geocoding failed:', status);
+    //         return;
+    //       }
 
-  //         var result = response.v2; // Naver Maps API 문서에 따라 'v2'로 가정
-  //         var items = result.results;
-  //         var address = result.address;
+    //       var result = response.v2; // Naver Maps API 문서에 따라 'v2'로 가정
+    //       var items = result.results;
+    //       var address = result.address;
 
-  //         setSelectedAddress(address); // 선택된 주소 업데이트
-  //         console.log('Reverse geocoding result:', address);
-  //       }
-  //     );
-  //   } else {
-  //     console.error('Naver Maps API Service not available');
-  //   }
-  // };
+    //       setSelectedAddress(address); // 선택된 주소 업데이트
+    //       console.log('Reverse geocoding result:', address);
+    //     }
+    //   );
+    // } else {
+    //   console.error('Naver Maps API Service not available');
+    // }
+
+
+    // infoWindow 생성
+    const infoWindow = new naver.maps.InfoWindow({ content: '', borderWidth: 0 });
+    naver.maps.Service.reverseGeocode(
+      {
+        coords: latlng,
+        orders: [naver.maps.Service.OrderType.ADDR, naver.maps.Service.OrderType.ROAD_ADDR].join(','),
+      },
+      function (
+        status: naver.maps.Service.Status,
+        response: naver.maps.Service.ReverseGeocodeResponse,
+      ) {
+        if (status !== naver.maps.Service.Status.OK) {
+          return alert('Something went wrong!');
+        }
+
+        const address = response.v2.address.roadAddress
+          ? response.v2.address.roadAddress
+          : response.v2.address.jibunAddress;
+
+          // infoWindow 안에 넣어줄 html을 setContent 메서드에 넣어준다.
+        infoWindow.setContent(
+          ['<div style="padding:10px;min-width:200px;line-height:150%;">', address, '</div>'].join('')
+        );
+          
+          // open 메서드에 지도와 좌표를 전달하여 정보 창을 열어준다.
+        infoWindow.open(latlng);
+      },
+    );
+  };
 
 
   if (!isOpen) return null;
@@ -158,3 +216,8 @@ const MapModal: React.FC<MapModalProps> = ({
 };
 
 export default MapModal;
+
+
+
+
+
