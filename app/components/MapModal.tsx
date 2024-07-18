@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   UserLocationAtom,
@@ -10,183 +10,101 @@ interface MapModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectLocation: (location: { lat: number; lng: number }) => void;
+  onSelectAddress: (address: string) => void;
 }
 
 const MapModal: React.FC<MapModalProps> = ({
   isOpen,
   onClose,
-  onSelectLocation
+  onSelectLocation,
+  onSelectAddress
 }) => {
   const mapElement = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
-  const markerInstance = useRef<any>(null);
   const userLocation = useRecoilValue(UserLocationAtom);
-  const [selectedLocation, setSelectedLocation] = useRecoilState(
-    selectedLocationAtom
-  );
-  const [selectedAddress, setSelectedAddress] = useRecoilState(
-    selectedAddressAtom
-  );
-  const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
+  const [selectedLocation, setSelectedLocation] = useRecoilState(selectedLocationAtom);
+  const [selectedAddress, setSelectedAddress] = useRecoilState(selectedAddressAtom);
+  const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_API_KEY;
 
   useEffect(() => {
-    const loadNaverMapScript = () => {
-      const script = document.createElement('script');
-      script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
-      script.async = true;
-      script.onload = initializeMap; // 스크립트 로드 후 초기화 함수 호출
-      script.onerror = () => alert('Naver Maps API 로드 실패');
-      document.head.appendChild(script);
-    };
-
-
-    if (isOpen && mapElement.current) {
-      if (naver && naver.maps) {
-        initializeMap();
-      } else {
-        loadNaverMapScript();
-      }
-    }
-    
-  }, [isOpen, naverMapApiKey, userLocation.latitude, userLocation.longitude]);
-
-  const initializeMap = () => {
-    if (mapElement.current && naver && naver.maps) {
-      const map = new naver.maps.Map(mapElement.current, {
-        scaleControl: false,
-        logoControl: true,
-        mapDataControl: true,
-        zoomControl: false,
-        minZoom: 6,
-        center: new naver.maps.LatLng(
-          userLocation.latitude,
-          userLocation.longitude
-        ),
-        zoom: 18
-      });
-
-
-      mapInstance.current = map;
-
-      naver.maps.Event.addListener(map, 'click', (e: any) => {
-        const lat = e.coord.lat();
-        const lng = e.coord.lng();
-
-        setSelectedLocation({
-          latitude: lat,
-          longitude: lng
+    const initializeMap = () => {
+      if (mapElement.current && window.naver && window.naver.maps) {
+        const map = new window.naver.maps.Map(mapElement.current, {
+          scaleControl: false,
+          logoControl: true,
+          mapDataControl: true,
+          zoomControl: false,
+          minZoom: 6,
+          center: new window.naver.maps.LatLng(
+            userLocation.latitude,
+            userLocation.longitude
+          ),
+          zoom: 18
         });
 
-        // if (markerInstance.current) {
-        //   markerInstance.current.setMap(null);
-        // }
+        mapInstance.current = map;
 
-        // markerInstance.current = new naver.maps.Marker({
-        //   position: new naver.maps.LatLng(lat, lng),
-        //   map: map
-        // });
+        window.naver.maps.Event.addListener(map, 'click', (e: any) => {
+          const lat = e.coord.lat();
+          const lng = e.coord.lng();
 
-        // // 역 지오코딩 함수 호출
-        //searchCoordinateToAddress(new naver.maps.LatLng(lat, lng));
+          setSelectedLocation({
+            latitude: lat,
+            longitude: lng
+          });
 
-        naver.maps.Service.reverseGeocode(
-              {
-                coords: new naver.maps.LatLng(lat, lng)
-              },
-              function (status: any, response: any) {
-                if (status !== naver.maps.Service.Status.OK) {
-                  console.error('Reverse geocoding failed:', status);
-                  return;
-                }
-      
-                var result = response.v2; // Naver Maps API 문서에 따라 'v2'로 가정
-                var items = result.results;
-                var address = result.address;
-      
-                setSelectedAddress(address); // 선택된 주소 업데이트
-                console.log('Reverse geocoding result:', address);
+          window.naver.maps.Service.reverseGeocode(
+            {
+              coords: new window.naver.maps.LatLng(lat, lng),
+              orders: 'roadaddr,addr'
+            },
+            (status: any, response: any) => {
+              if (status !== window.naver.maps.Service.Status.OK) {
+                console.error('Reverse geocoding failed:', status);
+                return;
               }
-            );
-          
 
-        
-        const infoWindow = new naver.maps.InfoWindow({ content: '', borderWidth: 0 });
+              const result = response.v2;
+              const address = result.address.roadAddress || result.address.jibunAddress;
 
-        infoWindow.setContent(
-          ['<div style="padding:10px;min-width:200px;line-height:150%;">', '아아아아아', '</div>'].join('')
-        );
+              setSelectedAddress(address);
 
-        infoWindow.open(map, new naver.maps.LatLng(lat, lng));
-      });
+              const infoWindow = new window.naver.maps.InfoWindow({ content: '', borderWidth: 0 });
+              infoWindow.setContent(
+                ['<div style="padding:10px;min-width:200px;line-height:150%;">', address, '</div>'].join('')
+              );
+              infoWindow.open(map, new window.naver.maps.LatLng(lat, lng));
+            }
+          );
+        });
+      } else {
+        console.error('Naver Maps API is not loaded');
+      }
+    };
+
+    if (isOpen) {
+      if (window.naver && window.naver.maps && window.naver.maps.Service) {
+        initializeMap();
+      } else {
+        const script = document.createElement('script');
+        script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
+        script.async = true;
+        script.onload = initializeMap;
+        script.onerror = () => alert('Naver Maps API 로드 실패');
+        document.head.appendChild(script);
+      }
     }
-  };
-
-  const searchCoordinateToAddress = (latlng: any) => {
-    
-    // if (naver.maps.Service) {
-    //   console.log('Reverse geocoding...');
-    //   naver.maps.Service.reverseGeocode(
-    //     {
-    //       coords: latlng
-    //     },
-    //     function (status: any, response: any) {
-    //       if (status !== naver.maps.Service.Status.OK) {
-    //         console.error('Reverse geocoding failed:', status);
-    //         return;
-    //       }
-
-    //       var result = response.v2; // Naver Maps API 문서에 따라 'v2'로 가정
-    //       var items = result.results;
-    //       var address = result.address;
-
-    //       setSelectedAddress(address); // 선택된 주소 업데이트
-    //       console.log('Reverse geocoding result:', address);
-    //     }
-    //   );
-    // } else {
-    //   console.error('Naver Maps API Service not available');
-    // }
-
-
-    // infoWindow 생성
-    const infoWindow = new naver.maps.InfoWindow({ content: '', borderWidth: 0 });
-    naver.maps.Service.reverseGeocode(
-      {
-        coords: latlng,
-        orders: [naver.maps.Service.OrderType.ADDR, naver.maps.Service.OrderType.ROAD_ADDR].join(','),
-      },
-      function (
-        status: naver.maps.Service.Status,
-        response: naver.maps.Service.ReverseGeocodeResponse,
-      ) {
-        if (status !== naver.maps.Service.Status.OK) {
-          return alert('Something went wrong!');
-        }
-
-        const address = response.v2.address.roadAddress
-          ? response.v2.address.roadAddress
-          : response.v2.address.jibunAddress;
-
-          // infoWindow 안에 넣어줄 html을 setContent 메서드에 넣어준다.
-        infoWindow.setContent(
-          ['<div style="padding:10px;min-width:200px;line-height:150%;">', address, '</div>'].join('')
-        );
-          
-          // open 메서드에 지도와 좌표를 전달하여 정보 창을 열어준다.
-        infoWindow.open(latlng);
-      },
-    );
-  };
-
+  }, [isOpen, userLocation.latitude, userLocation.longitude]);
 
   if (!isOpen) return null;
 
   const handleConfirm = () => {
-    if (selectedLocation && markerInstance.current) {
+    if (selectedLocation && selectedAddress) {
       onSelectLocation({
         lat: selectedLocation.latitude,
         lng: selectedLocation.longitude
       });
+      onSelectAddress(selectedAddress);
       onClose();
     } else {
       alert('Please select a location.');
@@ -216,8 +134,3 @@ const MapModal: React.FC<MapModalProps> = ({
 };
 
 export default MapModal;
-
-
-
-
-

@@ -132,66 +132,14 @@ const Registration: React.FC = () => {
             longitude: location.lng
           }
         }));
-
-        //reverseGeocode();
     };
 
-    // const reverseGeocode = async () => {
-    //     const lng = attraction.attractionLocation.longitude;
-    //     const lat = attraction.attractionLocation.latitude;
-        
-    //     try {
-    //         //const response = await axios.get(`https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=126.9780,37.5665&orders=roadaddr&output=json`, {
-    //         const response = await axios.get(`/v2/gc?coords=${lng},${lat}&orders=roadaddr&output=json`, {    
-    //             headers: {
-    //                     'X-NCP-APIGW-API-KEY-ID': naverMapApiKey,
-    //                     'X-NCP-APIGW-API-KEY': naverMapApiSecret,
-    //                 }
-    //         });
-
-    //         const address = response.data.results[0].region.area1.name + ' ' +
-    //                         response.data.results[0].region.area2.name + ' ' +
-    //                         response.data.results[0].region.area3.name + ' ' +
-    //                         response.data.results[0].land.name;
-
-    //         setSelectedAddress(address); // 선택된 주소를 Recoil 상태에 저장
-    //         setAttraction(prevAttraction => ({
-    //             ...prevAttraction,
-    //             attractionAddress: address // attraction 객체에 주소 추가
-    //         }));
-    //     } catch (error) {
-    //         console.error('Reverse geocoding error:', error);
-    //         alert('주소 변환에 실패했습니다.');
-    //     }
-
-    //     // const coords = new Map();
-
-    //     // coords.set('latitude',  attraction.attractionLocation.latitude);
-    //     // coords.set('longitude', attraction.attractionLocation.longitude);
-
-
-    //     // console.log(coords);
-        
-
-    //     // try {
-    //     //     const response = await axios.post('/', coords, {
-    //     //         withCredentials: true,
-    //     //     });
-    
-    //     //     const data = response.data;
-    //     //     const address = data.address;
-    //     //     console.log(String(address));
-    //     //     setSelectedAddress(address);
-    //     //     setAttraction(prevAttraction => ({
-    //     //         ...prevAttraction,
-    //     //         attractionaddress: address
-    //     //     }));
-    //     // } catch (error) {
-    //     //     console.error('리버스 지오코딩 에러:', error);
-    //     //     alert('주소 변환에 실패했습니다.');
-    //     // }
-    // };
-
+    const handleSelectAddress = (address: string) => {
+        setAttraction(prevAttraction => ({
+            ...prevAttraction,
+            attractionAddress: address
+        }));
+    };
     
 
     return (
@@ -270,6 +218,7 @@ const Registration: React.FC = () => {
                 isOpen={isMapModalOpen} 
                 onClose={() => setIsMapModalOpen(false)} 
                 onSelectLocation={handleSelectLocation} 
+                onSelectAddress={handleSelectAddress}
             />
         </main>
     );
