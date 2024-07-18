@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   UserLocationAtom,
   selectedAddressAtom,
   selectedLocationAtom
 } from '../recoil/RecoilContext';
+import { FaSearch } from 'react-icons/fa';
 
 interface MapModalProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ const MapModal: React.FC<MapModalProps> = ({
   const userLocation = useRecoilValue(UserLocationAtom);
   const [selectedLocation, setSelectedLocation] = useRecoilState(selectedLocationAtom);
   const [selectedAddress, setSelectedAddress] = useRecoilState(selectedAddressAtom);
+  const [searchAddress, setSearchAddress] = useState<string>("");
   const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_API_KEY;
 
   useEffect(() => {
@@ -53,29 +55,10 @@ const MapModal: React.FC<MapModalProps> = ({
             longitude: lng
           });
 
-          window.naver.maps.Service.reverseGeocode(
-            {
-              coords: new window.naver.maps.LatLng(lat, lng),
-              orders: 'roadaddr,addr'
-            },
-            (status: any, response: any) => {
-              if (status !== window.naver.maps.Service.Status.OK) {
-                console.error('Reverse geocoding failed:', status);
-                return;
-              }
 
-              const result = response.v2;
-              const address = result.address.roadAddress || result.address.jibunAddress;
+          handleReverseGeoCode(lat, lng, map);
 
-              setSelectedAddress(address);
-
-              const infoWindow = new window.naver.maps.InfoWindow({ content: '', borderWidth: 0 });
-              infoWindow.setContent(
-                ['<div style="padding:10px;min-width:200px;line-height:150%;">', address, '</div>'].join('')
-              );
-              infoWindow.open(map, new window.naver.maps.LatLng(lat, lng));
-            }
-          );
+          
         });
       } else {
         console.error('Naver Maps API is not loaded');
@@ -98,6 +81,88 @@ const MapModal: React.FC<MapModalProps> = ({
 
   if (!isOpen) return null;
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchAddress(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearch(searchAddress);
+  };
+
+  const handleReverseGeoCode = (lat: number, lng: number, map: any) => {
+    window.naver.maps.Service.reverseGeocode(
+      {
+        coords: new window.naver.maps.LatLng(lat, lng),
+        orders: 'roadaddr,addr'
+      },
+      (status: any, response: any) => {
+        if (status !== window.naver.maps.Service.Status.OK) {
+          console.error('Reverse geocoding failed:', status);
+          return;
+        }
+
+        const result = response.v2;
+        const address = result.address.roadAddress || result.address.jibunAddress;
+
+        setSelectedAddress(address);
+
+        const infoWindow = new window.naver.maps.InfoWindow({ content: '', borderWidth: 0 });
+        infoWindow.setContent(
+          `
+          <div style="padding: 10px; min-width: 200px; line-height: 150%; background-color: white; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+            <p style="margin: 0;">${address}</p>
+          </div>
+          `
+        );
+        infoWindow.open(map, new window.naver.maps.LatLng(lat, lng));
+      }
+    );
+  }
+
+  const handleSearch = (address: string) => {
+    console.log(address);
+    naver.maps.Service.geocode(
+      { query: address },
+      function (status, res) {
+        if (res.v2.addresses.length === 0) {
+          // 요청실패 (searchKeyword에 대한 응답이 없을 경우) 에러 핸들링
+          alert("검색 실패");
+        } else {
+          // 요청 성공에 대한 핸들링
+          // 검색된 주소에 해당하는 위도, 경도를 숫자로 변환후 상태 저장
+          const resAddress = res.v2.addresses[0];
+          const lng = parseFloat(resAddress.x);
+          const lat = parseFloat(resAddress.y);
+          console.log(resAddress.roadAddress);
+          console.log("lat= " + lat + ", lng= " + lng);
+
+
+          setSelectedLocation({ latitude: lat, longitude: lng });
+          setSelectedAddress(resAddress.roadAddress);
+
+          mapInstance.current.setCenter(new window.naver.maps.LatLng(lat, lng));
+
+          const infoWindow = new window.naver.maps.InfoWindow({
+            content: `
+                 <div style="padding: 10px; min-width: 200px; line-height: 150%; background-color: white; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+                   <p style="margin: 0;">${resAddress.roadAddress}</p>
+                 </div>
+               `,
+               borderWidth: 0
+          });
+          infoWindow.open(mapInstance.current, new window.naver.maps.LatLng(lat, lng));
+         
+        }
+
+        
+      }
+    );
+  };
+
+  
+
+
   const handleConfirm = () => {
     if (selectedLocation && selectedAddress) {
       onSelectLocation({
@@ -105,11 +170,14 @@ const MapModal: React.FC<MapModalProps> = ({
         lng: selectedLocation.longitude
       });
       onSelectAddress(selectedAddress);
+      setSearchAddress("");
       onClose();
     } else {
       alert('Please select a location.');
     }
   };
+
+
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -117,9 +185,21 @@ const MapModal: React.FC<MapModalProps> = ({
         <button onClick={onClose} className="absolute top-2 right-2">
           x
         </button>
+        <div className="w-full mx-auto ">
+            <form onSubmit={handleSubmit}className="w-full border p-2 rounded-lg  bg-gray-100 flex flex-row">
+                <input
+                    type="text"
+                    className="w-full bg-gray-100 focus:outline-none"
+                    placeholder="주소를 입력하시거나 지도를 클릭하세요."
+                    value={searchAddress}
+                    onChange={handleInputChange}
+                />
+                <button className="p-2"><FaSearch /></button> 
+            </form>
+          </div>
         <div
           ref={mapElement}
-          style={{ width: '100%', height: '90%' }}
+          style={{ width: '100%', height: '80%' }}
           className="mt-2"
         />
         <button

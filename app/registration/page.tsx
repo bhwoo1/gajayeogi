@@ -43,11 +43,11 @@ const Registration: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        // 이미지가 없을 때 경고 메시지 표시
-        if (attraction.attractionImages.length === 0) {
-            alert('이미지를 등록해주세요.');
-            return; // 이미지가 없으면 함수 종료
-        };
+        // // 이미지가 없을 때 경고 메시지 표시
+        // if (attraction.attractionImages.length === 0) {
+        //     alert('이미지를 등록해주세요.');
+        //     return; // 이미지가 없으면 함수 종료
+        // };
 
         // 이름이 없을 때 경고 메시지 표시
         if (attraction.attractionName === "") {
@@ -177,15 +177,15 @@ const Registration: React.FC = () => {
                                 value={attraction.attractionCategory} 
                                 onChange={(e) => setAttraction({ ...attraction, attractionCategory: e.target.value })}
                             >
-                                <option value="">관광지</option>
-                                <option>문화시설</option>
-                                <option>축제공연행사</option>
-                                <option>여행코스</option>
-                                <option>레포츠</option>
-                                <option>숙박</option>
-                                <option>쇼핑</option>
-                                <option>음식점</option>
-                                <option>교통</option>
+                                <option value="1">관광지</option>
+                                <option value="2">문화시설</option>
+                                <option value="3">축제공연행사</option>
+                                <option value="4">여행코스</option>
+                                <option value="5">레포츠</option>
+                                <option value="6">숙박</option>
+                                <option value="7">쇼핑</option>
+                                <option value="8">음식점</option>
+                                <option value="9">교통</option>
                             </select>
                         </div>
                         <div className="flex flex-col">
