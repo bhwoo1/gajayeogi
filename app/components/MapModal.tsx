@@ -46,6 +46,7 @@ const MapModal: React.FC<MapModalProps> = ({
 
         mapInstance.current = map;
 
+        // 클릭 이벤트 추가
         window.naver.maps.Event.addListener(map, 'click', (e: any) => {
           const lat = e.coord.lat();
           const lng = e.coord.lng();
@@ -55,7 +56,7 @@ const MapModal: React.FC<MapModalProps> = ({
             longitude: lng
           });
 
-
+          // 사용자가 선택한 좌표를 주소로 변환
           handleReverseGeoCode(lat, lng, map);
 
           
@@ -90,6 +91,7 @@ const MapModal: React.FC<MapModalProps> = ({
     handleSearch(searchAddress);
   };
 
+  // 사용자가 선택한 좌표를 주소로 변환(역지오코딩)
   const handleReverseGeoCode = (lat: number, lng: number, map: any) => {
     window.naver.maps.Service.reverseGeocode(
       {
@@ -120,6 +122,7 @@ const MapModal: React.FC<MapModalProps> = ({
     );
   }
 
+  // 사용자가 검색한 주소를 좌표로 변환(지오코딩)
   const handleSearch = (address: string) => {
     console.log(address);
     naver.maps.Service.geocode(
@@ -141,6 +144,7 @@ const MapModal: React.FC<MapModalProps> = ({
           setSelectedLocation({ latitude: lat, longitude: lng });
           setSelectedAddress(resAddress.roadAddress);
 
+          // 해당 좌표로 맵 이동
           mapInstance.current.setCenter(new window.naver.maps.LatLng(lat, lng));
 
           const infoWindow = new window.naver.maps.InfoWindow({
