@@ -8,7 +8,7 @@ const B:React.FC = () => {
         <main className="flex min-h-screen flex-col items-center p-24">
             <MenuBar currentPage={"B"} />
             <Link href="/registration"><button>등록하기</button></Link>
-            {/* <UserAttractionList /> */}
+            <UserAttractionList />
         </main>
     );
 }

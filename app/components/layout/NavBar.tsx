@@ -2,9 +2,10 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import Image from "next/image";
+import axios from "axios";
 
 
 const NavBar:React.FC = () => {
@@ -13,6 +14,26 @@ const NavBar:React.FC = () => {
     const loginBtnClick = async () => {
         await signIn("naver", { redirect: true, callbackUrl: "/" }); 
     }
+
+    useEffect(() => {
+        if (session && session.user && session.user.email && session.user.name) {
+            const formData = new FormData();
+            formData.append("user", String(session.user.email));
+            formData.append("username", String(session.user.name));
+            
+            axios.post('http://localhost:8080/saveuser', formData, {
+                withCredentials: true
+            })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        } else {
+            console.log("User session information is incomplete.");
+        }
+    }, [session]);
 
     return(
         <header className="fixed left-0 right-0 top-0 py-4 z-50 user-not-selectable bg-white">

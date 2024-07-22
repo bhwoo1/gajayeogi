@@ -18,7 +18,7 @@ const initialAttractionState: Attraction = {
         longitude: 0.0
     },
     attractionAddress: "",
-    attractionCategory: "",
+    attractionCategory: "1",
     attractionExplain: ""
 }
 
@@ -69,18 +69,19 @@ const Registration: React.FC = () => {
 
         // 설명에 공백 문자를 특수문자로 변환
         const modifiedContent = attraction.attractionExplain.replace(/\n/g, "§");
-
         const formData = new FormData();
         for (const image of attraction.attractionImages) {
             formData.append('postimg', image);
         };
         formData.append('posttitle', attraction.attractionName);
-        formData.append('location', attraction.attractionAddress);
-        formData.append('xpoint', String(attraction.attractionLocation.latitude));
-        formData.append('ypoint', String(attraction.attractionLocation.longitude));
-        formData.append('postcontent', attraction.attractionExplain);
+        formData.append('postlocation', attraction.attractionAddress);
+        formData.append('postxpoint', String(attraction.attractionLocation.latitude));
+        formData.append('postypoint', String(attraction.attractionLocation.longitude));
+        formData.append('postcontent', modifiedContent);
         formData.append('postuser', String(session?.user?.email));
         formData.append('postusername', String(session?.user?.name));
+
+        console.log(attraction);
 
         axios.post("http://localhost:8080/postwrite", formData,{
             headers: {
@@ -95,7 +96,7 @@ const Registration: React.FC = () => {
         .catch((err) => {
             console.log(err);
             alert('등록에 실패하였습니다.');
-        })
+        });
     }    
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +105,7 @@ const Registration: React.FC = () => {
             if (attraction.attractionImages.length + selectedImages.length <= 5) {
                 setAttraction(prevAttraction => ({
                     ...prevAttraction,
-                    attractionimages: [...prevAttraction.attractionImages, ...selectedImages]
+                    attractionImages: [...prevAttraction.attractionImages, ...selectedImages]
                 }));
             } else {
                 alert("최대 5개까지의 이미지만 업로드할 수 있습니다.");
@@ -115,7 +116,7 @@ const Registration: React.FC = () => {
     const handleRemoveImage = (index: number) => {
         setAttraction(prevAttraction => ({
             ...prevAttraction,
-            attractionimages: prevAttraction.attractionImages.filter((_, i) => i !== index)
+            attractionImages: prevAttraction.attractionImages.filter((_, i) => i !== index)
         }));
     };
 
