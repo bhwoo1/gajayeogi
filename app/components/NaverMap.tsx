@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { UserLocationAtom } from '../recoil/RecoilContext';
 
@@ -9,13 +9,12 @@ const NaverMap = () => {
     const userLocation = useRecoilValue(UserLocationAtom);
     const mapElement = useRef<HTMLDivElement>(null);
     const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
-    //const [showConnectionInfo, setShowConnectionInfo] = useState(false);
 
     useEffect(() => {
+    
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
             script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
-            // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv`;
             script.async = true;
             script.onload = () => {
                 initializeMap();
@@ -36,16 +35,6 @@ const NaverMap = () => {
                     
                 });
 
-
-                // const point = new window.naver.maps.Point(userLocation.longitude, userLocation.latitude);
-                // const marker = new window.naver.maps.Marker({
-                //     position: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
-                //     map: map,
-                //     icon: {
-                //         content: '<div style="width: 10px; height: 10px; background-color: blue; border-radius: 50%;"></div>',
-                //         anchor: new window.naver.maps.Point(5, 5), // 점의 중심을 가운데로 설정
-                //     },
-                // });
             }
         };
 
@@ -124,17 +113,7 @@ const NaverMap = () => {
                 }
     
             });
-    
-            // 사용자의 현재 위치에 마커 추가
-            // const point = new window.naver.maps.Point(longitude, latitude);
-            // const marker = new window.naver.maps.Marker({
-            //     position: new window.naver.maps.LatLng(latitude, longitude),
-            //     map: map,
-            //     icon: {
-            //         content: '<div style="width: 10px; height: 10px; background-color: blue; border-radius: 50%; "></div>',
-            //         anchor: new window.naver.maps.Point(5, 5), // 마커의 중심을 설정합니다.
-            //     },
-            // });
+
         }
     };
 

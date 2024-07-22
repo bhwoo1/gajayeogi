@@ -28,7 +28,10 @@ const MapModal: React.FC<MapModalProps> = ({
   const [searchAddress, setSearchAddress] = useState<string>("");
   const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_API_KEY;
 
+
   useEffect(() => {
+
+    
     const initializeMap = () => {
       if (mapElement.current && window.naver && window.naver.maps) {
         const map = new window.naver.maps.Map(mapElement.current, {
@@ -137,9 +140,6 @@ const MapModal: React.FC<MapModalProps> = ({
           const resAddress = res.v2.addresses[0];
           const lng = parseFloat(resAddress.x);
           const lat = parseFloat(resAddress.y);
-          console.log(resAddress.roadAddress);
-          console.log("lat= " + lat + ", lng= " + lng);
-
 
           setSelectedLocation({ latitude: lat, longitude: lng });
           setSelectedAddress(resAddress.roadAddress);
