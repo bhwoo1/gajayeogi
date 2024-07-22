@@ -11,9 +11,7 @@ const NavBar:React.FC = () => {
     const {data: session} = useSession();
 
     const loginBtnClick = async () => {
-        await signIn("naver", { redirect: true, callbackUrl: "/" });
-        // await signIn("naver", {redirect: false});
-  
+        await signIn("naver", { redirect: true, callbackUrl: "/" }); 
     }
 
     return(
