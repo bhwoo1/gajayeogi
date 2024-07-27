@@ -30,7 +30,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
 
     const imageChange = (image: string, index: number) => {
         setSelectedImage(image);
-        setSelectedIndex(index); // Update the selected index
+        setSelectedIndex(index);
     }
 
     return (
