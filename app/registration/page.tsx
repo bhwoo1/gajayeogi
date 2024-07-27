@@ -43,11 +43,11 @@ const Registration: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        // // 이미지가 없을 때 경고 메시지 표시
-        // if (attraction.attractionImages.length === 0) {
-        //     alert('이미지를 등록해주세요.');
-        //     return; // 이미지가 없으면 함수 종료
-        // };
+        // 이미지가 없을 때 경고 메시지 표시
+        if (attraction.attractionImages.length === 0) {
+            alert('이미지를 등록해주세요.');
+            return; // 이미지가 없으면 함수 종료
+        };
 
         // 이름이 없을 때 경고 메시지 표시
         if (attraction.attractionName === "") {

@@ -3,26 +3,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image"
+import { RecieveAttraction } from "../Type";
+import Link from "next/link";
 
-type ReceveAttraction = {
-    location: string,
-    postcontent: string,
-    postid: string,
-    postimgurl: string[],
-    posttitle: string,
-    postuser: string,
-    postusername: string,
-    xpoint: string,
-    ypoint: string
-}
+
 
 const UserAttractionList = () => {
-    const [attractionList, setAttractionList] = useState<ReceveAttraction[]>([]);
+    const [attractionList, setAttractionList] = useState<RecieveAttraction[]>([]);
 
     useEffect(() => {
         axios.get("http://localhost:8080/postallread")
         .then((res) => {
-            console.log(res);
             setAttractionList(res.data);
         })
         .catch((err) => {
@@ -33,7 +24,11 @@ const UserAttractionList = () => {
     return(
         <div>
             {attractionList.map((attraction) => (
-                <p>{attraction.posttitle}</p>
+                <div className="flex flex-row">
+                    <Link href={`/attraction/${attraction.postid}`} key={attraction.postid} passHref>
+                        <button>{attraction.posttitle}</button>
+                    </Link>
+                </div>
           ))}
         </div>
     );

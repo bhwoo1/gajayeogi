@@ -11,7 +11,7 @@ type Props = {
 const MenuBar:React.FC<Props> = ( {currentPage} ) => {
 
     return(
-        <div className="w-full h-full flex flex-row justify-start">
+        <div className= "w-full h-full flex flex-row justify-start">
              <Link href="/">
                 <div className="p-8 cursor-pointer">
                     <p className={currentPage === 'home' ? 
