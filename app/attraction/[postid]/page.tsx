@@ -100,7 +100,14 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                                 <h1 className="text-4xl font-bold mb-2">{attractionData.posttitle}</h1>
                                 <p className="text-gray-600 mb-4">{attractionData.postusername} 님이 등록</p>
                                 <div className="mb-8">
-                                    <p className="text-sm">{attractionData.postcontent}</p>
+                                    <p className="text-sm">
+                                        {attractionData?.postcontent && attractionData.postcontent.split('§').map((line, index) => (
+                                            <React.Fragment key={index}>
+                                                {line}
+                                                <br />
+                                            </React.Fragment>
+                                        ))}
+                                    </p>
                                 </div>
                                 <div className="mb-2">
                                     <p className="text-gray-600 mb-2">위치: </p>
