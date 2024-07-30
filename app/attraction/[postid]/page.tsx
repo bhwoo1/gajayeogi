@@ -12,6 +12,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     const [attractionData, setAttractionData] = useState<RecieveAttraction>();
     const [selectedImage, setSelectedImage] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>(0); // Track the selected index
+    const [suggested, setSuggested] = useState<boolean>(false);
 
     useEffect(() => {
         axios.get("http://localhost:8080/postread", {
@@ -21,7 +22,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                 console.log(res.data);
                 setAttractionData(res.data);
                 setSelectedImage(res.data.postimgurl[0]);
-                setSelectedIndex(0); // Set initial selected index
+                setSelectedIndex(0);
             })
             .catch((err) => {
                 console.log(err);
@@ -31,6 +32,36 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     const imageChange = (image: string, index: number) => {
         setSelectedImage(image);
         setSelectedIndex(index);
+    }
+
+    const suggestClick = () => {
+        axios.post("http://localhost:8080/postsuggest", {
+            postid: attractionData?.postid,
+            postuser: attractionData?.postuser
+        })
+        .then((res) => {
+            alert("추천했습니다!");
+            setSuggested(true);
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("추천에 실패하였습니다.");
+        })
+    }
+
+    const unsuggestClick = () => {
+        axios.post("http://localhost:8080/unpostsuggest", {
+            postid: attractionData?.postid,
+            postuser: attractionData?.postuser
+        })
+        .then((res) => {
+            alert("추천 해제하였습니다!");
+            setSuggested(false);
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("추천 해제에 실패하였습니다.");
+        })
     }
 
     return (
@@ -55,7 +86,12 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                             <div className="flex flex-col justify-center">
                                 <div className="flex flex-row">
                                     <h1 className="text-4xl font-bold mb-2">{attractionData.posttitle}</h1>
-                                    <p className="ml-12 text-4xl cursor-pointer"><FaRegThumbsUp /></p>
+                                    {suggested ? 
+                                            <button onClick={suggestClick}><p className="ml-12 text-4xl cursor-pointer"><FaThumbsUp /></p></button>
+                                        :
+                                            <button onClick={unsuggestClick}><p className="ml-12 text-4xl cursor-pointer"><FaRegThumbsUp /></p></button>
+                                    }
+                                    
                                 </div>
                                 <p className="text-gray-600 mb-4">{attractionData.postusername} 님이 등록</p>
                                 <div className="mb-8">
