@@ -110,7 +110,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                                     </p>
                                 </div>
                                 <div className="mb-2">
-                                    <p className="text-gray-600 mb-2">위치: </p>
+                                    <p className="text-gray-600 mb-2 text-sm">위치: {attractionData.postlocation}</p>
                                     <div className="mb-2">
                                         <AttractionMap 
                                             attractionLat={Number(attractionData.postxpoint)} 
