@@ -4,15 +4,18 @@ import { signIn, useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import MyProfile from "../components/MyProfile";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 // 마이 페이지
 const MyPage:React.FC = () => {
     const {data: session, status: sessionStatus} = useSession();
+    const router = useRouter();
 
     useEffect(() => {
       if (sessionStatus === "loading") return; // 세션 로딩 중일 때는 아무것도 하지 않음
       if (!session) {
-        signIn("naver", { redirect: true });
+        // signIn("naver", { redirect: true });
+        router.push("/login");
       }
       
       axios.get("http://localhost:8080/readuser", {

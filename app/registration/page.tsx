@@ -36,7 +36,8 @@ const Registration: React.FC = () => {
     useEffect(() => {
         if (sessionStatus === "loading") return; // 세션 로딩 중일 때는 아무것도 하지 않음
         if (!session) {
-          signIn("naver", { redirect: true });
+          // signIn("naver", { redirect: true });
+            router.push("/login");
         }
     }, [session, sessionStatus]);
 
