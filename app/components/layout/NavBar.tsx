@@ -33,7 +33,7 @@ const NavBar:React.FC = () => {
         } else {
             console.log("User session information is incomplete.");
         }
-    }, [session]);
+    }, []);
 
     return(
         <header className="fixed left-0 right-0 top-0 py-4 z-50 user-not-selectable bg-white">

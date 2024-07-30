@@ -17,11 +17,11 @@ const MyPage:React.FC = () => {
         // signIn("naver", { redirect: true });
         router.push("/login");
       }
-      
-      axios.get("http://localhost:8080/readuser", {
-        params : {
-          user: session?.user?.email
-        }
+
+      const formData = new FormData();
+      formData.append("user", String(session?.user?.email))
+      axios.post("http://localhost:8080/readuser", formData, {
+        withCredentials: true
       })
       .then((res) => {
         console.log(res.data);
