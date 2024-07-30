@@ -3,6 +3,7 @@
 import { signIn, useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import MyProfile from "../components/MyProfile";
+import axios from "axios";
 
 // 마이 페이지
 const MyPage:React.FC = () => {
@@ -13,6 +14,18 @@ const MyPage:React.FC = () => {
       if (!session) {
         signIn("naver", { redirect: true });
       }
+      
+      axios.get("http://localhost:8080/readuser", {
+        params : {
+          user: session?.user?.email
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }, [session, sessionStatus]);
 
 

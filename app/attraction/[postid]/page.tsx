@@ -13,6 +13,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     const [selectedImage, setSelectedImage] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>(0); // Track the selected index
     const [suggested, setSuggested] = useState<boolean>(false);
+    const [isHovered, setIsHovered] = useState<boolean>(false);
 
     useEffect(() => {
         axios.get("http://localhost:8080/postread", {
@@ -35,9 +36,11 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     }
 
     const suggestClick = () => {
-        axios.post("http://localhost:8080/postsuggest", {
-            postid: attractionData?.postid,
-            postuser: attractionData?.postuser
+        const formData = new FormData();
+        formData.append("postid", String(attractionData?.postid));
+        formData.append("postuser", String(attractionData?.postuser));
+        axios.post("http://localhost:8080/postsuggest", formData,  {
+            withCredentials: true,
         })
         .then((res) => {
             alert("추천했습니다!");
@@ -50,9 +53,11 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     }
 
     const unsuggestClick = () => {
-        axios.post("http://localhost:8080/unpostsuggest", {
-            postid: attractionData?.postid,
-            postuser: attractionData?.postuser
+        const formData = new FormData();
+        formData.append("postid", String(attractionData?.postid));
+        formData.append("postuser", String(attractionData?.postuser));
+        axios.post("http://localhost:8080/unpostsuggest", formData, {
+            withCredentials: true,
         })
         .then((res) => {
             alert("추천 해제하였습니다!");
@@ -63,6 +68,14 @@ const AttractionPage = (props: { params: { postid: number } }) => {
             alert("추천 해제에 실패하였습니다.");
         })
     }
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+      };
+    
+      const handleMouseLeave = () => {
+        setIsHovered(false);
+      };
 
     return (
         <main className="flex min-h-screen flex-col p-24">
@@ -84,28 +97,47 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center">
-                                <div className="flex flex-row">
-                                    <h1 className="text-4xl font-bold mb-2">{attractionData.posttitle}</h1>
-                                    {suggested ? 
-                                            <button onClick={suggestClick}><p className="ml-12 text-4xl cursor-pointer"><FaThumbsUp /></p></button>
-                                        :
-                                            <button onClick={unsuggestClick}><p className="ml-12 text-4xl cursor-pointer"><FaRegThumbsUp /></p></button>
-                                    }
-                                    
-                                </div>
+                                <h1 className="text-4xl font-bold mb-2">{attractionData.posttitle}</h1>
                                 <p className="text-gray-600 mb-4">{attractionData.postusername} 님이 등록</p>
                                 <div className="mb-8">
                                     <p className="text-sm">{attractionData.postcontent}</p>
                                 </div>
-                                <div className="mb-8">
+                                <div className="mb-2">
                                     <p className="text-gray-600 mb-2">위치: </p>
-                                    <div className="mb-8">
+                                    <div className="mb-2">
                                         <AttractionMap 
                                             attractionLat={Number(attractionData.postxpoint)} 
                                             attractionLng={Number(attractionData.postypoint)} 
                                         />
                                         <p className="text-gray-600 mb-2 text-sm">지도를 클릭하시면 Naver 지도가 열립니다.</p>
                                     </div>
+                                </div>
+                                <div className="mb-8">
+                                    {suggested ? 
+                                            <div className="flex flex-row">
+                                            <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                                onClick={unsuggestClick}
+                                                onMouseEnter={handleMouseEnter}
+                                                onMouseLeave={handleMouseLeave}>
+                                                    <FaThumbsUp />
+                                            </p>
+                                            <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                                <span className="text-white text-sm font-bold">이미 추천했어요!</span>
+                                            </div>
+                                        </div>
+                                        :
+                                            <div className="flex flex-row">
+                                                <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                                    onClick={suggestClick}
+                                                    onMouseEnter={handleMouseEnter}
+                                                    onMouseLeave={handleMouseLeave}>
+                                                        <FaRegThumbsUp />
+                                                </p>
+                                                <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                                    <span className="text-white text-sm font-bold">추천하실래요?</span>
+                                                </div>
+                                            </div>
+                                    } 
                                 </div>
                             </div>
                         </div>
