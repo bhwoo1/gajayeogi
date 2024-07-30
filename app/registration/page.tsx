@@ -26,8 +26,6 @@ const Registration: React.FC = () => {
     const [attraction, setAttraction] = useState<Attraction>(initialAttractionState);
     const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
     const { data: session, status: sessionStatus } = useSession();
-    const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
-    const naverMapApiSecret = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_SECRET;
     const [selectedAddress, setSelectedAddress] = useRecoilState(selectedAddressAtom);
     const router = useRouter();
     
