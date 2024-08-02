@@ -1,7 +1,11 @@
+"use client"
+
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaRegThumbsUp, FaThumbsUp  } from "react-icons/fa6";
+import { MdDeleteForever } from "react-icons/md";
 
 type Props = {
     postid: string,
@@ -12,6 +16,7 @@ const AttractionPageAction = (prop: Props) => {
     const {data: session, status: sessionStatus} = useSession();
     const [suggested, setSuggested] = useState<boolean>(false);
     const [isHovered, setIsHovered] = useState<boolean>(false);
+    const router = useRouter();
 
     useEffect(() => {
         if(session?.user?.email) {
@@ -74,43 +79,88 @@ const AttractionPageAction = (prop: Props) => {
             console.log(err);
             alert("추천 해제에 실패하였습니다.");
         })
-    }
+    };
+
+    const attractionDelete = () => {
+        if(prop.postuser != session?.user?.email) {
+            alert("잘못된 요청입니다.");
+            return;
+        }
+
+
+        axios.delete("http://localhost:8080/postdelete", {
+            params: {
+                postid: prop.postid,
+                postuser: session?.user.email
+            },
+            withCredentials: true
+        })
+        .then((res) => {
+            alert('상품을 삭제하였습니다.');
+            router.push("/B");
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("삭제하지 못했습니다.");
+        });
+    };
 
     const handleMouseEnter = () => {
         setIsHovered(true);
-      };
+    };
     
-      const handleMouseLeave = () => {
+    const handleMouseLeave = () => {
         setIsHovered(false);
-      };
+    };
+
+
 
     return(
         <>
-            {suggested ? 
-                                            <div className="flex flex-row">
-                                            <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
-                                                onClick={unsuggestClick}
-                                                onMouseEnter={handleMouseEnter}
-                                                onMouseLeave={handleMouseLeave}>
-                                                    <FaThumbsUp />
-                                            </p>
-                                            <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                                                <span className="text-white text-sm font-bold">이미 추천했어요!</span>
-                                            </div>
-                                        </div>
-                                        :
-                                            <div className="flex flex-row">
-                                                <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
-                                                    onClick={suggestClick}
-                                                    onMouseEnter={handleMouseEnter}
-                                                    onMouseLeave={handleMouseLeave}>
-                                                        <FaRegThumbsUp />
-                                                </p>
-                                                <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                                                    <span className="text-white text-sm font-bold">추천하실래요?</span>
-                                                </div>
-                                            </div>
-            } 
+            {prop.postuser === session?.user?.email ? (
+                <>
+                    <div className="flex flex-row">
+                        <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                            onClick={attractionDelete}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}>
+                                <MdDeleteForever />
+                        </p>
+                        <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                            <span className="text-white text-sm font-bold">삭제하시겠습니까?</span>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <>
+                    {suggested ? 
+                            <div className="flex flex-row">
+                                <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                    onClick={unsuggestClick}
+                                    onMouseEnter={handleMouseEnter}
+                                    onMouseLeave={handleMouseLeave}>
+                                        <FaThumbsUp />
+                                </p>
+                                <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                    <span className="text-white text-sm font-bold">이미 추천했어요!</span>
+                                </div>
+                            </div>
+                        :
+                            <div className="flex flex-row">
+                                <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                    onClick={suggestClick}
+                                    onMouseEnter={handleMouseEnter}
+                                    onMouseLeave={handleMouseLeave}>
+                                        <FaRegThumbsUp />
+                                </p>
+                                <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                    <span className="text-white text-sm font-bold">추천하실래요?</span>
+                                </div>
+                            </div>
+                    } 
+                </>
+            )}
+            
         </>
     );
 
