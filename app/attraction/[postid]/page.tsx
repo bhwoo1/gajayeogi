@@ -7,6 +7,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdOutlineCircle, MdCircle } from "react-icons/md";
 import { FaRegThumbsUp, FaThumbsUp  } from "react-icons/fa6";
+import AttractionPageAction from "@/app/components/AttractionPageAction";
 
 const AttractionPage = (props: { params: { postid: number } }) => {
     const [attractionData, setAttractionData] = useState<RecieveAttraction>();
@@ -120,31 +121,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                                     </div>
                                 </div>
                                 <div className="mb-8">
-                                    {suggested ? 
-                                            <div className="flex flex-row">
-                                            <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
-                                                onClick={unsuggestClick}
-                                                onMouseEnter={handleMouseEnter}
-                                                onMouseLeave={handleMouseLeave}>
-                                                    <FaThumbsUp />
-                                            </p>
-                                            <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                                                <span className="text-white text-sm font-bold">이미 추천했어요!</span>
-                                            </div>
-                                        </div>
-                                        :
-                                            <div className="flex flex-row">
-                                                <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
-                                                    onClick={suggestClick}
-                                                    onMouseEnter={handleMouseEnter}
-                                                    onMouseLeave={handleMouseLeave}>
-                                                        <FaRegThumbsUp />
-                                                </p>
-                                                <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                                                    <span className="text-white text-sm font-bold">추천하실래요?</span>
-                                                </div>
-                                            </div>
-                                    } 
+                                    <AttractionPageAction postid={attractionData.postid} postuser={attractionData.postuser}/>
                                 </div>
                             </div>
                         </div>
