@@ -12,9 +12,7 @@ import AttractionPageAction from "@/app/components/AttractionPageAction";
 const AttractionPage = (props: { params: { postid: number } }) => {
     const [attractionData, setAttractionData] = useState<RecieveAttraction>();
     const [selectedImage, setSelectedImage] = useState<string>("");
-    const [selectedIndex, setSelectedIndex] = useState<number>(0); // Track the selected index
-    const [suggested, setSuggested] = useState<boolean>(false);
-    const [isHovered, setIsHovered] = useState<boolean>(false);
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
     useEffect(() => {
         axios.get("http://localhost:8080/postread", {
@@ -36,47 +34,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
         setSelectedIndex(index);
     }
 
-    const suggestClick = () => {
-        const formData = new FormData();
-        formData.append("postid", String(attractionData?.postid));
-        formData.append("postuser", String(attractionData?.postuser));
-        axios.post("http://localhost:8080/postsuggest", formData,  {
-            withCredentials: true,
-        })
-        .then((res) => {
-            alert("추천했습니다!");
-            setSuggested(true);
-        })
-        .catch((err) => {
-            console.log(err);
-            alert("추천에 실패하였습니다.");
-        })
-    }
-
-    const unsuggestClick = () => {
-        const formData = new FormData();
-        formData.append("postid", String(attractionData?.postid));
-        formData.append("postuser", String(attractionData?.postuser));
-        axios.post("http://localhost:8080/unpostsuggest", formData, {
-            withCredentials: true,
-        })
-        .then((res) => {
-            alert("추천 해제하였습니다!");
-            setSuggested(false);
-        })
-        .catch((err) => {
-            console.log(err);
-            alert("추천 해제에 실패하였습니다.");
-        })
-    }
-
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-      };
     
-      const handleMouseLeave = () => {
-        setIsHovered(false);
-      };
 
     return (
         <main className="flex min-h-screen flex-col p-24">
