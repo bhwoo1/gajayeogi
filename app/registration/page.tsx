@@ -193,7 +193,8 @@ const Registration: React.FC = () => {
                             <input type="text" id="attractionAddress" name="attractionAddress" 
                                 value={attraction.attractionAddress} 
                                 onChange={(e) => setAttraction({ ...attraction, attractionAddress: e.target.value })} 
-                                className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                readOnly
                             />
                             <button onClick={handleMapButtonClick} className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 mt-2 rounded" ><p>지도에서 선택</p></button>
                         </div>
