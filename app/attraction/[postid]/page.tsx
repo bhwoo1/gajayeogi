@@ -6,7 +6,6 @@ import { RecieveAttraction } from "@/app/Type";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdOutlineCircle, MdCircle } from "react-icons/md";
-import { FaRegThumbsUp, FaThumbsUp  } from "react-icons/fa6";
 import AttractionPageAction from "@/app/components/AttractionPageAction";
 
 const AttractionPage = (props: { params: { postid: number } }) => {
