@@ -1,7 +1,7 @@
 "use client"
 
 import { signIn, useSession } from "next-auth/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MyProfile from "../components/MyProfile";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 // 마이 페이지
 const MyPage:React.FC = () => {
     const {data: session, status: sessionStatus} = useSession();
+    const [scrapIds, setScrapIds] = useState<string[]>([]);
+    const [writeIds, setWriteIds] = useState<string[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -25,6 +27,8 @@ const MyPage:React.FC = () => {
       })
       .then((res) => {
         console.log(res.data);
+        setScrapIds(res.data.scrapids);
+        setWriteIds(res.data.writeids);
       })
       .catch((err) => {
         console.log(err);
