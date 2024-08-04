@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 
 const AttractionList = () => {
     useEffect(() => {
-        axios.get("http://localhost:8080/info")
+        axios.get("http://localhost:8080/api/tour/info")
         .then((res) => {
             console.log(res.data);
         })

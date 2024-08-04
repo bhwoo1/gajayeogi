@@ -23,5 +23,6 @@ export type RecieveAttraction = {
     postusername: string,
     postxpoint: string,
     postypoint: string,
-    suggest: string
+    suggest: string,
+    postcategory: string
 }

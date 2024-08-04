@@ -57,6 +57,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                             <div className="flex flex-col justify-center">
                                 <h1 className="text-4xl font-bold mb-2">{attractionData.posttitle}</h1>
                                 <p className="text-gray-600 mb-4">{attractionData.postusername} 님이 등록</p>
+                                <p className="text-sm text-gray-600 mb-8">{attractionData.postcategory}</p>
                                 <div className="mb-8">
                                     <p className="text-sm">
                                         {attractionData?.postcontent && attractionData.postcontent.split('§').map((line, index) => (

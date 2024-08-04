@@ -96,7 +96,7 @@ const AttractionPageAction = (prop: Props) => {
             withCredentials: true
         })
         .then((res) => {
-            alert('상품을 삭제하였습니다.');
+            alert('삭제하였습니다.');
             router.push("/B");
         })
         .catch((err) => {

@@ -18,7 +18,7 @@ const initialAttractionState: Attraction = {
         longitude: 0.0
     },
     attractionAddress: "",
-    attractionCategory: "1",
+    attractionCategory: "관광지",
     attractionExplain: ""
 }
 
@@ -74,6 +74,7 @@ const Registration: React.FC = () => {
         };
         formData.append('posttitle', attraction.attractionName);
         formData.append('postlocation', attraction.attractionAddress);
+        formData.append('postcategory', attraction.attractionCategory);
         formData.append('postxpoint', String(attraction.attractionLocation.latitude));
         formData.append('postypoint', String(attraction.attractionLocation.longitude));
         formData.append('postcontent', modifiedContent);
@@ -177,15 +178,15 @@ const Registration: React.FC = () => {
                                 value={attraction.attractionCategory} 
                                 onChange={(e) => setAttraction({ ...attraction, attractionCategory: e.target.value })}
                             >
-                                <option value="1">관광지</option>
-                                <option value="2">문화시설</option>
-                                <option value="3">축제공연행사</option>
-                                <option value="4">여행코스</option>
-                                <option value="5">레포츠</option>
-                                <option value="6">숙박</option>
-                                <option value="7">쇼핑</option>
-                                <option value="8">음식점</option>
-                                <option value="9">교통</option>
+                                <option value="관광지">관광지</option>
+                                <option value="문화시설">문화시설</option>
+                                <option value="축제공연행사">축제공연행사</option>
+                                <option value="여행코스">여행코스</option>
+                                <option value="레포츠">레포츠</option>
+                                <option value="숙박">숙박</option>
+                                <option value="쇼핑">쇼핑</option>
+                                <option value="음식점">음식점</option>
+                                <option value="교통">교통</option>
                             </select>
                         </div>
                         <div className="flex flex-col">
