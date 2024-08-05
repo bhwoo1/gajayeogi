@@ -1,7 +1,7 @@
 "use client"
 
 import { RecoilRoot, atom } from "recoil";
-import { Location } from "../Type";
+import { Location, TourAttraction } from "../Type";
 
 // 사용자의 현재 위치
 export const UserLocationAtom = atom<Location>({
@@ -26,6 +26,33 @@ export const selectedLocationAtom = atom<Location>({
 export const selectedAddressAtom = atom({
     key: "SelectedAddressState",
     default: ""
+});
+
+export const selectedAttractionAtom = atom<TourAttraction>({
+    key: "SelectedAttraction",
+    default: {
+        addr1: "",
+        addr2: "",
+        areacode: "",
+        booktour: "",
+        cat1: "",
+        cat2: "",
+        cat3: "",
+        contentid: "",
+        contenttypeid: "",
+        cpyrhtDivCd: "",
+        createdtime: "",
+        dist: "",
+        firstimage: "",
+        firstimage2: "",
+        mapx: "",
+        mapy: "",
+        mlevel: "",
+        modifiedtime: "",
+        sigungucode: "",
+        tel: "",
+        title: ""
+    }
 });
 
 export default function RecoilContextProvider({ children }: { children: React.ReactNode }) {

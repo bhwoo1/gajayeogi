@@ -4,7 +4,7 @@ import {
   UserLocationAtom,
   selectedAddressAtom,
   selectedLocationAtom
-} from '../recoil/RecoilContext';
+} from '../../recoil/RecoilContext';
 import { FaSearch } from 'react-icons/fa';
 
 interface MapModalProps {

@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image"
-import { RecieveAttraction } from "../Type";
+import { RecieveAttraction } from "../../Type";
 import Link from "next/link";
 
 

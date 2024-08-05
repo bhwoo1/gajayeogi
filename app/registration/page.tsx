@@ -3,8 +3,8 @@
 import { signIn, useSession } from "next-auth/react";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Attraction } from "../Type";
-import MapModal from "../components/MapModal";
-import Geolocation from "../components/Geolocation";
+import MapModal from "../components/Map/MapModal";
+import Geolocation from "../components/Map/Geolocation";
 import { useRecoilState } from "recoil";
 import { selectedAddressAtom } from "../recoil/RecoilContext";
 import axios from "axios";

@@ -1,4 +1,4 @@
-import Geolocation from "./components/Geolocation";
+import Geolocation from "./components/Map/Geolocation";
 import Introduce from "./components/Introduce";
 import MenuBar from "./components/layout/MenuBar";
 

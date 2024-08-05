@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { UserLocationAtom } from "../recoil/RecoilContext";
+import { UserLocationAtom } from "../../recoil/RecoilContext";
 
 const Geolocation = () => {
   const [userLocation, setUserLocation] = useRecoilState(UserLocationAtom);

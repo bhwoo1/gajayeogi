@@ -1,7 +1,7 @@
 import React from "react";
 import MenuBar from "../components/layout/MenuBar";
 import Link from "next/link";
-import UserAttractionList from "../components/UserAttractionList";
+import UserAttractionList from "../components/Attraction/UserAttractionList";
 
 const B:React.FC = () => {
     return(

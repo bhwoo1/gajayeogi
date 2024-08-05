@@ -2,10 +2,13 @@
 
 import axios from "axios";
 import React, { useEffect } from "react";
-import { TourAttraction } from "../Type";
+import { TourAttraction } from "../../Type";
 import Link from "next/link";
+import { useRecoilState } from "recoil";
+import { selectedAttractionAtom } from "../../recoil/RecoilContext";
 
 const AttractionList = (props: {attractionArray: TourAttraction[]}) => {
+    const [selectedAttraction, setSelectedAttraction] = useRecoilState(selectedAttractionAtom);
     
 
     return(

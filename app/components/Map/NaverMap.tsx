@@ -2,12 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { UserLocationAtom } from '../recoil/RecoilContext';
+import { UserLocationAtom } from '../../recoil/RecoilContext';
 import axios from 'axios';
-import { TourAttraction } from '../Type';
-import Link from 'next/link';
-import AttractionList from './AttractionList';
-
+import { TourAttraction } from '../../Type';
+import AttractionList from '../Attraction/AttractionList';
 
 const NaverMap = () => {
     const userLocation = useRecoilValue(UserLocationAtom);

@@ -1,12 +1,12 @@
 "use client";
 
-import AttractionMap from "@/app/components/AttractionMap";
+import AttractionMap from "@/app/components/Map/AttractionMap";
 import MenuBar from "@/app/components/layout/MenuBar";
 import { RecieveAttraction } from "@/app/Type";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdOutlineCircle, MdCircle } from "react-icons/md";
-import AttractionPageAction from "@/app/components/AttractionPageAction";
+import AttractionPageAction from "@/app/components/Attraction/AttractionPageAction";
 
 const AttractionPage = (props: { params: { postid: number } }) => {
     const [attractionData, setAttractionData] = useState<RecieveAttraction>();

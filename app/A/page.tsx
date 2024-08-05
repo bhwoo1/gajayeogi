@@ -2,7 +2,7 @@
 
 import React from "react";
 import MenuBar from "../components/layout/MenuBar";
-import NaverMap from "../components/NaverMap";
+import NaverMap from "../components/Map/NaverMap";
 import Search from "../components/Search";
 // import AttractionList from "../components/AttractionList";
 
