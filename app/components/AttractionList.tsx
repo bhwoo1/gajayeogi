@@ -2,23 +2,22 @@
 
 import axios from "axios";
 import React, { useEffect } from "react";
+import { TourAttraction } from "../Type";
+import Link from "next/link";
 
-const AttractionList = () => {
-    useEffect(() => {
-        axios.get("http://localhost:8080/api/tour/info")
-        .then((res) => {
-            console.log(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-
-    }, []);
+const AttractionList = (props: {attractionArray: TourAttraction[]}) => {
+    
 
     return(
-        <>
-        
-        </>
+        <div>
+            {props.attractionArray?.map((attraction) => (
+                <div className="flex flex-col" key={attraction.contentid}>
+                    <Link href={`/attraction/${attraction.contentid}`} passHref>
+                        <button>{attraction.title}</button>
+                    </Link>
+                </div>
+            ))}
+        </div>
     );
 }
 

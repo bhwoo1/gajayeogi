@@ -1,16 +1,42 @@
 "use client"
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { UserLocationAtom } from '../recoil/RecoilContext';
+import axios from 'axios';
+import { TourAttraction } from '../Type';
+import Link from 'next/link';
+import AttractionList from './AttractionList';
 
 
 const NaverMap = () => {
     const userLocation = useRecoilValue(UserLocationAtom);
     const mapElement = useRef<HTMLDivElement>(null);
     const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
+    const [tourAPIAttraction, setTourAPIAttraction] = useState<TourAttraction[]>([]);
 
     useEffect(() => {
+
+        axios.get("http://localhost:8080/api/tour/info", {
+            params: {
+                postxpoint: userLocation.longitude,
+                postypoint: userLocation.latitude
+            },
+            withCredentials: true
+        })
+        .then((res) => {
+            // console.log(res.data.response.body.items.item);
+            setTourAPIAttraction(res.data.response.body.items.item);
+            
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, [userLocation]);
+
+    useEffect(() => {
+        console.log("투어API : ");
+        console.log(tourAPIAttraction)
     
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
@@ -32,9 +58,21 @@ const NaverMap = () => {
                     minZoom: 6,
                     center: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
                     zoom: 18,
-                    
                 });
 
+                // // userLocation에 마커 생성
+                // const marker = new window.naver.maps.Marker({
+                //     position: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
+                //     map: map
+                // });
+
+
+                tourAPIAttraction.forEach(attraction => {
+                    new window.naver.maps.Marker({
+                        position: new window.naver.maps.LatLng(Number(attraction.mapy), Number(attraction.mapx)),
+                        map: map
+                    });
+                });
             }
         };
 
@@ -52,7 +90,7 @@ const NaverMap = () => {
         } else {
             loadNaverMapScript();
         }
-    }, []);
+    }, [tourAPIAttraction]);
 
 
     
@@ -77,6 +115,14 @@ const NaverMap = () => {
                 minZoom: 6,
                 center: new window.naver.maps.LatLng(latitude, longitude),
                 zoom: 18,
+            });
+
+
+            tourAPIAttraction.forEach(attraction => {
+                new window.naver.maps.Marker({
+                    position: new window.naver.maps.LatLng(Number(attraction.mapy), Number(attraction.mapx)),
+                    map: map
+                });
             });
     
             naver.maps.Event.once(map, 'init', function() {
@@ -118,7 +164,10 @@ const NaverMap = () => {
     };
 
     return (
-        <div ref={mapElement} style={{ width: '100%', height: '400px' }} />
+        <div className='flex flex-col w-full'>
+            <div ref={mapElement} style={{ width: '100%', height: '400px' }} />
+            <AttractionList attractionArray={tourAPIAttraction} />
+        </div>
     );
 };
 

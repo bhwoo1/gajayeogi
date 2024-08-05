@@ -25,7 +25,7 @@ const UserAttractionList = () => {
         <div>
             {attractionList.map((attraction) => (
                 <div className="flex flex-row">
-                    <Link href={`/attraction/${attraction.postid}`} key={attraction.postid} passHref>
+                    <Link href={`/attraction/user/${attraction.postid}`} key={attraction.postid} passHref>
                         <button>{attraction.posttitle}</button>
                     </Link>
                 </div>
