@@ -30,7 +30,7 @@ const MenuBar:React.FC<Props> = ( {currentPage} ) => {
                         : 
                             'text-base text-gray-500 hover:text-gray-700'
                         }>
-                        어쩌구
+                        여기갈래?
                     </p>
                 </div>
             </Link>
@@ -41,7 +41,7 @@ const MenuBar:React.FC<Props> = ( {currentPage} ) => {
                         : 
                             'text-base text-gray-500 hover:text-gray-700'
                         }>
-                        저쩌구
+                        어디갈까?
                     </p>
                 </div>
             </Link>
