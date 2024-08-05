@@ -3,7 +3,6 @@ export type Attraction = {
     attractionName: string,
     attractionLocation: Location,
     attractionAddress: string,
-    attractionCategory: string,
     attractionExplain: string
 }
 
@@ -24,7 +23,6 @@ export type RecieveAttraction = {
     postxpoint: string,
     postypoint: string,
     suggest: string,
-    postcategory: string
 }
 
 export type TourAttraction = {

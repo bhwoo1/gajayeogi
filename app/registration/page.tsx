@@ -18,7 +18,6 @@ const initialAttractionState: Attraction = {
         longitude: 0.0
     },
     attractionAddress: "",
-    attractionCategory: "관광지",
     attractionExplain: ""
 }
 
@@ -54,12 +53,6 @@ const Registration: React.FC = () => {
             return; // 이름이 없으면 함수 종료
         };
 
-        // 주소가 없을 때 경고 메시지 표시
-        if (attraction.attractionCategory === "") {
-            alert('카테고리를 선택해주세요.');
-            return; // 카테고리가 없으면 함수 종료
-        };
-
         // 설명이 없을 때 경고 메시지 표시
         if (attraction.attractionExplain === "") {
             alert('설명을 등록해주세요.');
@@ -74,7 +67,6 @@ const Registration: React.FC = () => {
         };
         formData.append('posttitle', attraction.attractionName);
         formData.append('postlocation', attraction.attractionAddress);
-        formData.append('postcategory', attraction.attractionCategory);
         formData.append('postxpoint', String(attraction.attractionLocation.latitude));
         formData.append('postypoint', String(attraction.attractionLocation.longitude));
         formData.append('postcontent', modifiedContent);
@@ -171,23 +163,6 @@ const Registration: React.FC = () => {
                                 onChange={(e) => setAttraction({ ...attraction, attractionName: e.target.value })} 
                                 className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
                             />
-                        </div>
-                        <div className="flex flex-col">
-                            <label htmlFor="attractionCategory" className="mb-2 font-medium text-gray-700">카테고리:</label>
-                            <select className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" id="attractionCategory" name="attractionCategory" 
-                                value={attraction.attractionCategory} 
-                                onChange={(e) => setAttraction({ ...attraction, attractionCategory: e.target.value })}
-                            >
-                                <option value="관광지">관광지</option>
-                                <option value="문화시설">문화시설</option>
-                                <option value="축제공연행사">축제공연행사</option>
-                                <option value="여행코스">여행코스</option>
-                                <option value="레포츠">레포츠</option>
-                                <option value="숙박">숙박</option>
-                                <option value="쇼핑">쇼핑</option>
-                                <option value="음식점">음식점</option>
-                                <option value="교통">교통</option>
-                            </select>
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="attractionaddress" className="mb-2 font-medium text-gray-700">위치:</label>
