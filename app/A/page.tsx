@@ -10,7 +10,7 @@ const A:React.FC = () => {
     return(
         <main className="flex min-h-screen flex-col items-center p-24">
             <MenuBar currentPage={"A"} />
-            <Search />
+            {/* <Search /> */}
             <NaverMap />
             {/* <AttractionList /> */}
         </main>

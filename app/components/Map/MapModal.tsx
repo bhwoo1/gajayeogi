@@ -190,7 +190,7 @@ const MapModal: React.FC<MapModalProps> = ({
           x
         </button>
         <div className="w-full mx-auto ">
-            <form onSubmit={handleSubmit}className="w-full border p-2 rounded-lg  bg-gray-100 flex flex-row">
+            <form onSubmit={handleSubmit} className="w-full border p-2 rounded-lg  bg-gray-100 flex flex-row">
                 <input
                     type="text"
                     className="w-full bg-gray-100 focus:outline-none"

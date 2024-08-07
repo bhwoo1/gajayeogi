@@ -48,3 +48,12 @@ export type TourAttraction = {
     tel: string,
     title: string
 }
+
+export type AreaJsonType = {
+    [key: string]: {
+        name: string;
+        sigungucode: {
+            [key: string]: string;
+        };
+    };
+};
