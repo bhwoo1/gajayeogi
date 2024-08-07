@@ -58,7 +58,7 @@ const NaverMap = () => {
                     zoomControl: false,
                     minZoom: 6,
                     center: new window.naver.maps.LatLng(userLocation.latitude, userLocation.longitude),
-                    zoom: 18,
+                    zoom: 15,
                 });
     
                 console.log("지도 초기화 완료");
