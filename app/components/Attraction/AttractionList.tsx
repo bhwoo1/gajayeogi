@@ -14,14 +14,24 @@ const AttractionList = (props: {attractionArray: TourAttraction[]}) => {
     const attractionClick = (attraction: TourAttraction) => {
         setSelectedAttraction(attraction);
         router.push(`/attraction/${attraction.contentid}`);
-    }   
+    };
+
+    const handleMouseEnter = (attraction: TourAttraction) => {
+        console.log(attraction);
+        setSelectedAttraction(attraction);
+    }
     
 
     return(
         <div>
             {props.attractionArray?.map((attraction) => (
                 <div className="flex flex-col" key={attraction.contentid}>
-                    <button onClick={() => attractionClick(attraction)}>{attraction.title}</button>
+                    <button 
+                        onClick={() => attractionClick(attraction)}
+                        onMouseEnter={() => handleMouseEnter(attraction)}
+                    >
+                        {attraction.title}
+                    </button>
                 </div>
             ))}
         </div>
