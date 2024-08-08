@@ -120,7 +120,7 @@ const NaverMap = () => {
                                 longitude: lng
                             });
 
-                            console.log(tourAPIAttraction);
+                            
                         });
                     }
                 });
@@ -138,6 +138,7 @@ const NaverMap = () => {
     useEffect(() => {
         if (selectedAttraction && mapInstance.current) {
             mapInstance.current.setCenter(new window.naver.maps.LatLng(Number(selectedAttraction.mapy), Number(selectedAttraction.mapx)));
+            mapInstance.current.setZoom(18);
         }
     }, [selectedAttraction]);
 

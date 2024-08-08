@@ -25,7 +25,7 @@ const AttractionList = (props: { attractionArray: TourAttraction[] }) => {
     return (
         <div 
             className="flex flex-col max-h-screen overflow-y-auto"
-            style={{ maxHeight: '500px' }} // 이 줄을 통해 높이를 제한
+            style={{ maxHeight: '250px' }} // 이 줄을 통해 높이를 제한
         >
             {props.attractionArray?.map((attraction) => (
                 <div 
