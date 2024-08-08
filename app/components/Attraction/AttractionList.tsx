@@ -6,8 +6,9 @@ import Link from "next/link";
 import { useRecoilState } from "recoil";
 import { selectedAttractionAtom } from "../../recoil/RecoilContext";
 import { useRouter } from "next/navigation";
+import AttractionBlock from "./AttractionBlock";
 
-const AttractionList = (props: {attractionArray: TourAttraction[]}) => {
+const AttractionList = (props: { attractionArray: TourAttraction[] }) => {
     const [selectedAttraction, setSelectedAttraction] = useRecoilState(selectedAttractionAtom);
     const router = useRouter();
 
@@ -20,18 +21,20 @@ const AttractionList = (props: {attractionArray: TourAttraction[]}) => {
         console.log(attraction);
         setSelectedAttraction(attraction);
     }
-    
 
-    return(
-        <div>
+    return (
+        <div 
+            className="flex flex-col max-h-screen overflow-y-auto"
+            style={{ maxHeight: '500px' }} // 이 줄을 통해 높이를 제한
+        >
             {props.attractionArray?.map((attraction) => (
-                <div className="flex flex-col" key={attraction.contentid}>
-                    <button 
-                        onClick={() => attractionClick(attraction)}
-                        onMouseEnter={() => handleMouseEnter(attraction)}
-                    >
-                        {attraction.title}
-                    </button>
+                <div 
+                    className="flex flex-col" 
+                    key={attraction.contentid} 
+                    onClick={() => attractionClick(attraction)}
+                    onMouseEnter={() => handleMouseEnter(attraction)}
+                >
+                    <AttractionBlock attractionData={attraction} />
                 </div>
             ))}
         </div>

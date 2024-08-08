@@ -48,7 +48,7 @@ const AttractionPage = (props: {params: {contentid: string}}) => {
                             </p>
                         </div> */}
                         <div className="mb-2">
-                            <p className="text-gray-600 mb-2 text-sm">위치: {selectedAttraction.addr1} {selectedAttraction.addr2}</p>
+                            <p className="text-gray-600 mb-2 text-sm">주소: {selectedAttraction.addr1} {selectedAttraction.addr2}</p>
                             <div className="mb-2">
                                 <AttractionMap 
                                     attractionLat={Number(selectedAttraction.mapy)} 
