@@ -58,6 +58,16 @@ export type AreaJsonType = {
     };
 };
 
+export type UserData = {
+    userid: number,
+    username: string,
+    introduction: string,
+    postwriteids: string[],
+    reviewwriteids: string[],
+    scrapids: string[],
+    visitids: string[],
+}
+
 export const areas: { [key: string]: string[] } = {
     "서울특별시": [
         "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",

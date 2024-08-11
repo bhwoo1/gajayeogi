@@ -17,15 +17,15 @@ export const UserLocationAtom = atom<Location>({
 export const selectedLocationAtom = atom<Location>({
     key: "SelectedLocationState",
     default: {
-        latitude: 0.0, // 위도
-        longitude: 0.0 // 경도
+        latitude: 37.5665, // 위도
+        longitude: 126.9780 // 경도
     }
 });
 
 // 사용자가 선택한 위치 주소
 export const selectedAddressAtom = atom({
     key: "SelectedAddressState",
-    default: ""
+    default: "서울특별시 중구 세종대로 110"
 });
 
 export const selectedAttractionAtom = atom<TourAttraction>({

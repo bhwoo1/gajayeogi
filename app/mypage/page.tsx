@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import MyProfile from "../components/Profile/MyProfile";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { UserData } from "../Type";
 
 // 마이 페이지
 const MyPage:React.FC = () => {
     const {data: session, status: sessionStatus} = useSession();
+    const [userData, setUserData] = useState<UserData>();
     const [scrapIds, setScrapIds] = useState<string[]>([]);
     const [writeIds, setWriteIds] = useState<string[]>([]);
     const [visitIds, setVisitIds] = useState<string[]>([]);
@@ -28,9 +30,7 @@ const MyPage:React.FC = () => {
       })
       .then((res) => {
         console.log(res.data);
-        setScrapIds(res.data.scrapids);
-        setWriteIds(res.data.writeids);
-        setVisitIds(res.data.visitids);
+        setUserData(res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +41,12 @@ const MyPage:React.FC = () => {
     return(
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
           {session ? 
-            <MyProfile writeIds={writeIds} visitIds={visitIds} />
+            <>
+              {userData &&
+                <MyProfile userData={userData} />
+              }
+            </>
+            
           :
             <div className='flex justify-center items-center'>
               <p className='font-semibold text-gray-700'>로그인이 필요합니다.</p>

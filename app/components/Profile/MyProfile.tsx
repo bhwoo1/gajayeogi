@@ -3,9 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { UserData } from "@/app/Type";
 
 // 프로필 컴포넌트
-const MyProfile = (props: {writeIds: string[], visitIds: string[]}) => {
+const MyProfile = (props: {userData: UserData}) => {
     const {data: session, status: sessionStatus} = useSession();
 
     return(
@@ -19,8 +20,8 @@ const MyProfile = (props: {writeIds: string[], visitIds: string[]}) => {
                 <div className="flex flex-col pl-6 pt-10">
                     <p className="text-3xl font-bold">{session?.user?.name} 님.</p>
                     <div className="flex flex-row">
-                      <p className="mr-4">방문: {props.visitIds?.length || 0}</p>
-                      <p>등록: {props.writeIds?.length || 0} </p>
+                      <p className="mr-4">방문: {props.userData?.visitids.length || 0}</p>
+                      <p>등록: {props.userData?.postwriteids.length || 0} </p>
                   </div>
                 </div>
               </div>

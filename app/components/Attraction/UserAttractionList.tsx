@@ -23,6 +23,7 @@ const UserAttractionList = () => {
             .then((res) => {
                 // 기본적으로 역순으로 정렬된 리스트를 설정
                 setAttractionList(res.data.reverse());
+                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -81,6 +82,11 @@ const UserAttractionList = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (keyword === "") {
+            alert('검색할 내용을 입력해주세요');
+            return;
+        }
+
         if (searchOptionValue === "title") {
             axios.get("http://localhost:8080/postsearch", {
                 params: {
@@ -89,7 +95,12 @@ const UserAttractionList = () => {
                 withCredentials: true
             })
             .then((res) => {
-                // setAttractionList(res.data);
+                if (res.data.length === 0) {
+                    alert('검색 결과가 존재하지 않습니다.');
+                    return;
+                }
+                
+                setAttractionList(res.data.reverse());
                 console.log(res.data);
             })
             .catch((err) => {
@@ -100,12 +111,18 @@ const UserAttractionList = () => {
         else {
             axios.get("http://localhost:8080/postsearch", {
                 params: {
-                    postuser: keyword
+                    postusername: keyword
                 },
                 withCredentials: true
             })
             .then((res) => {
-                // setAttractionList(res.data);
+                console.log(res.data);
+                if (res.data.length === 0) {
+                    alert('검색 결과가 존재하지 않습니다.');
+                    return;
+                }
+
+                setAttractionList(res.data.reverse());
                 console.log(res.data);
             })
             .catch((err) => {
