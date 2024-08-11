@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 
 // 프로필 컴포넌트
-const MyProfile = (props: {writeIds: string[], visitIds: string[]}) => {
+const UserProfile = (props: {username: string, writeIds: string[], visitIds: string[]}) => {
     const {data: session, status: sessionStatus} = useSession();
 
     return(
@@ -17,10 +17,10 @@ const MyProfile = (props: {writeIds: string[], visitIds: string[]}) => {
                   }
                 </div>
                 <div className="flex flex-col pl-6 pt-10">
-                    <p className="text-3xl font-bold">{session?.user?.name} 님.</p>
+                    <p className="text-3xl font-bold">{props.username} 님.</p>
                     <div className="flex flex-row">
-                      <p className="mr-4">방문: {props.visitIds?.length || 0}</p>
-                      <p>등록: {props.writeIds?.length || 0} </p>
+                      <p className="mr-4">방문: {props.visitIds.length || 0}</p>
+                      <p>등록: {props.writeIds.length || 0}</p>
                   </div>
                 </div>
               </div>
@@ -28,4 +28,4 @@ const MyProfile = (props: {writeIds: string[], visitIds: string[]}) => {
     );
 }
 
-export default MyProfile;
+export default UserProfile;

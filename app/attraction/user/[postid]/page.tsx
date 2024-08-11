@@ -7,11 +7,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdOutlineCircle, MdCircle } from "react-icons/md";
 import AttractionPageAction from "@/app/components/Attraction/AttractionPageAction";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const AttractionPage = (props: { params: { postid: number } }) => {
     const [attractionData, setAttractionData] = useState<RecieveAttraction>();
     const [selectedImage, setSelectedImage] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
+    const {data: session, status: sessionStatus} = useSession();
+    const router = useRouter();
 
     useEffect(() => {
         axios.get("http://localhost:8080/postread", {
@@ -31,6 +35,15 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     const imageChange = (image: string, index: number) => {
         setSelectedImage(image);
         setSelectedIndex(index);
+    };
+
+    const userBtnClick = () => {
+        if (session?.user?.email === attractionData?.postuser) {
+            router.push("/mypage");
+        }
+        else {
+            router.push(`/user/${attractionData?.postusername}`);
+        }
     }
 
     
@@ -56,7 +69,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                             </div>
                             <div className="flex flex-col justify-center">
                                 <h1 className="text-4xl font-bold mb-2">{attractionData.posttitle}</h1>
-                                <p className="text-gray-600 mb-4">{attractionData.postusername} 님이 등록</p>
+                                <p className="text-gray-600 mb-4"><button onClick={userBtnClick}>{attractionData.postusername}</button> 님이 등록</p>
                                 <div className="mb-8">
                                     <p className="text-sm">
                                         {attractionData?.postcontent && attractionData.postcontent.split('§').map((line, index) => (

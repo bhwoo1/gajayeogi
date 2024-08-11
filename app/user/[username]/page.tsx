@@ -1,28 +1,21 @@
 "use client"
 
-import { signIn, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import MyProfile from "../components/Profile/MyProfile";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import UserProfile from "@/app/components/Profile/UserProfile";
 
-// 마이 페이지
-const MyPage:React.FC = () => {
-    const {data: session, status: sessionStatus} = useSession();
+// 유저 페이지
+const UserPage = (props: {params: {username: string}}) => {
     const [scrapIds, setScrapIds] = useState<string[]>([]);
     const [writeIds, setWriteIds] = useState<string[]>([]);
     const [visitIds, setVisitIds] = useState<string[]>([]);
     const router = useRouter();
 
     useEffect(() => {
-      if (sessionStatus === "loading") return; // 세션 로딩 중일 때는 아무것도 하지 않음
-      if (!session) {
-        // signIn("naver", { redirect: true });
-        router.push("/login");
-      }
 
       const formData = new FormData();
-      formData.append("user", String(session?.user?.email))
+      formData.append("user", props.params.username)
       axios.post("http://localhost:8080/readuser", formData, {
         withCredentials: true
       })
@@ -35,21 +28,14 @@ const MyPage:React.FC = () => {
       .catch((err) => {
         console.log(err);
       })
-    }, [session, sessionStatus]);
+    }, []);
 
 
     return(
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
-          {session ? 
-            <MyProfile writeIds={writeIds} visitIds={visitIds} />
-          :
-            <div className='flex justify-center items-center'>
-              <p className='font-semibold text-gray-700'>로그인이 필요합니다.</p>
-            </div>
-          }
-            
+            <UserProfile username={props.params.username} visitIds={visitIds} writeIds={writeIds} />
         </main>
     );
 }
 
-export default MyPage;
+export default UserPage;
