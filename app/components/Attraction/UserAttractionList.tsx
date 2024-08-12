@@ -6,23 +6,32 @@ import { areas, RecieveAttraction } from "../../Type";
 import Link from "next/link";
 import UserAttractionBlock from "./UserAttractionBlock";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
-import { FaSearch, FaPlusCircle  } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
+import { useRecoilValue } from "recoil";
+import { bestToggleAtom } from "@/app/recoil/RecoilContext";
 
 const UserAttractionList = () => {
     const [attractionList, setAttractionList] = useState<RecieveAttraction[]>([]);
+    const [bestAttractionList, setBestAttractionList] = useState<RecieveAttraction[]>([]);
     const [optionValue, setOptionValue] = useState<string>("recent");
     const [searchOptionValue, setSearchOptionValue] = useState<string>("title");
     const [selectedArea, setSelectedArea] = useState<string>('');
     const [selectedSubArea, setSelectedSubArea] = useState<string>('');
     const [keyword, setKeyword] = useState<string>('');
     const [currentPage, setCurrentPage] = useState(1);
+    const bestMode = useRecoilValue(bestToggleAtom);
     const itemsPerPage = 4;
 
     useEffect(() => {
         axios.get("http://localhost:8080/postallread")
             .then((res) => {
-                // 기본적으로 역순으로 정렬된 리스트를 설정
-                setAttractionList(res.data.reverse());
+                const reversedList: RecieveAttraction[] = res.data.reverse();
+                setAttractionList(reversedList);
+
+                // suggest가 5 이상인 경우만 필터링하여 bestAttractionList에 저장
+                const bestAttractions = reversedList.filter((item: RecieveAttraction) => Number(item.suggest) >= 5);
+                setBestAttractionList(bestAttractions);
+
                 console.log(res.data);
             })
             .catch((err) => {
@@ -30,9 +39,16 @@ const UserAttractionList = () => {
             });
     }, []);
 
-    
+    // bestMode가 변경될 때마다 리스트를 업데이트
+    useEffect(() => {
+        setCurrentPage(1); // bestMode가 변경될 때 페이지를 첫 페이지로 초기화
+    }, [bestMode]);
+
+    // bestMode에 따라 적절한 리스트 선택
+    const listToShow = bestMode ? bestAttractionList : attractionList;
+
     // 옵션에 따라 리스트 정렬 및 필터링
-    const sortedAndFilteredItems = attractionList
+    const sortedAndFilteredItems = listToShow
         .filter((attraction) => {
             if (optionValue === 'area' && selectedArea && selectedSubArea) {
                 const [locationArea, locationSubArea] = attraction.postlocation.split(' ');
@@ -50,10 +66,10 @@ const UserAttractionList = () => {
             return 0;
         });
 
-    // Calculate the total number of pages
+    // 전체 페이지 수 계산
     const totalPages = Math.ceil(sortedAndFilteredItems.length / itemsPerPage);
 
-    // Slice the list for the current page
+    // 현재 페이지의 항목들
     const currentItems = sortedAndFilteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     const handlePageChange = (pageNumber: number) => {
@@ -87,49 +103,29 @@ const UserAttractionList = () => {
             return;
         }
 
-        if (searchOptionValue === "title") {
-            axios.get("http://localhost:8080/postsearch", {
-                params: {
-                    posttitle: keyword
-                },
-                withCredentials: true
-            })
+        const searchUrl = searchOptionValue === "title" ? "postsearch" : "postsearch";
+        const searchParams = searchOptionValue === "title" ? { posttitle: keyword } : { postusername: keyword };
+
+        axios.get(`http://localhost:8080/${searchUrl}`, {
+            params: searchParams,
+            withCredentials: true
+        })
             .then((res) => {
                 if (res.data.length === 0) {
                     alert('검색 결과가 존재하지 않습니다.');
                     return;
                 }
                 
-                setAttractionList(res.data.reverse());
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-                alert('검색 실패');
-            });
-        }
-        else {
-            axios.get("http://localhost:8080/postsearch", {
-                params: {
-                    postusername: keyword
-                },
-                withCredentials: true
-            })
-            .then((res) => {
-                console.log(res.data);
-                if (res.data.length === 0) {
-                    alert('검색 결과가 존재하지 않습니다.');
-                    return;
-                }
+                const reversedList: RecieveAttraction[] = res.data.reverse();
+                setAttractionList(reversedList);
 
-                setAttractionList(res.data.reverse());
-                console.log(res.data);
+                const bestAttractions = reversedList.filter((item: RecieveAttraction) => Number(item.suggest) >= 5);
+                setBestAttractionList(bestAttractions);
             })
             .catch((err) => {
                 console.log(err);
                 alert('검색 실패');
             });
-        }
     }
 
     const handleSearchOptionChange = (value: string) => {
@@ -158,16 +154,7 @@ const UserAttractionList = () => {
                     <button className="p-2"><FaSearch /></button>
                 </form>
             </div>
-            <div className="flex justify-center mt-4 mb-4">
-            <Link href="/registration">
-                <button>
-                    <p className="text-4xl text-gray-500 hover:text-gray-800 transition duration-300 ease-in-out">
-                        <FaPlusCircle />
-                    </p>
-                </button>
-            </Link>
-        </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center mb-4">
                 <select className="text-gray-500 text-sm" onChange={(e) => handleOptionChange(e.target.value)}>
                     <option value="recent">최신순</option>
                     <option value="ganada">가나다</option>

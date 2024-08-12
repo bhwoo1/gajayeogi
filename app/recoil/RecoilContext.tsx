@@ -29,7 +29,7 @@ export const selectedAddressAtom = atom({
 });
 
 export const selectedAttractionAtom = atom<TourAttraction>({
-    key: "SelectedAttraction",
+    key: "SelectedAttractionState",
     default: {
         addr1: "",
         addr2: "",
@@ -54,6 +54,11 @@ export const selectedAttractionAtom = atom<TourAttraction>({
         title: ""
     }
 });
+
+export const bestToggleAtom = atom<boolean>({
+    key: "bestToggleState",
+    default: false
+})
 
 export default function RecoilContextProvider({ children }: { children: React.ReactNode }) {
     return <RecoilRoot>{children}</RecoilRoot>;
