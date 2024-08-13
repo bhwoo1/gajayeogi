@@ -28,6 +28,11 @@ export const selectedAddressAtom = atom({
     default: "서울특별시 중구 세종대로 110"
 });
 
+export const selectedUserAtom = atom({
+    key: "SelectedUserState",
+    default: ""
+})
+
 export const selectedAttractionAtom = atom<TourAttraction>({
     key: "SelectedAttractionState",
     default: {

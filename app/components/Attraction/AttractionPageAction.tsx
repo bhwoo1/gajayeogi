@@ -6,16 +6,19 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaRegThumbsUp, FaThumbsUp  } from "react-icons/fa6";
 import { MdDeleteForever } from "react-icons/md";
+import { TbShoe, TbShoeOff  } from "react-icons/tb";
 
 type Props = {
     postid: string,
-    postuser: string
+    postuser: string,
+    suggest: number
 }
 
 const AttractionPageAction = (prop: Props) => {
     const {data: session, status: sessionStatus} = useSession();
     const [suggested, setSuggested] = useState<boolean>(false);
     const [isHovered, setIsHovered] = useState<boolean>(false);
+    const [visited, setVisited] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -61,7 +64,7 @@ const AttractionPageAction = (prop: Props) => {
         .catch((err) => {
             console.log(err);
             alert("추천에 실패하였습니다.");
-        })
+        });
     }
 
     const unsuggestClick = () => {
@@ -78,8 +81,42 @@ const AttractionPageAction = (prop: Props) => {
         .catch((err) => {
             console.log(err);
             alert("추천 해제에 실패하였습니다.");
-        })
+        });
     };
+
+    const visitClick = () => {
+        const formData = new FormData();
+        formData.append("reviewid", String(prop.postid));
+        formData.append("reivewuser", String(prop.postuser));
+        axios.post("http://localhost:8080/visitcount", formData,  {
+            withCredentials: true,
+        })
+        .then((res) => {
+            alert("이 장소에 방문하셨습니다!");
+            setVisited(true);
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("추천에 실패하였습니다.");
+        });
+    };
+
+    const unvisitClick = () => {
+        const formData = new FormData();
+        formData.append("reviewid", String(prop.postid));
+        formData.append("reviewuser", String(prop.postuser));
+        axios.post("http://localhost:8080/visituncount", formData, {
+            withCredentials: true,
+        })
+        .then((res) => {
+            alert("이 장소를 방문 취소하셨습니다!");
+            setSuggested(false);
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("방문 취소에 실패하였습니다.");
+        })
+    }
 
     const attractionDelete = () => {
         if(prop.postuser != session?.user?.email) {
@@ -132,32 +169,64 @@ const AttractionPageAction = (prop: Props) => {
                     </div>
                 </>
             ) : (
-                <>
-                    {suggested ? 
-                            <div className="flex flex-row">
-                                <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
-                                    onClick={unsuggestClick}
-                                    onMouseEnter={handleMouseEnter}
-                                    onMouseLeave={handleMouseLeave}>
-                                        <FaThumbsUp />
-                                </p>
-                                <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                                    <span className="text-white text-sm font-bold">이미 추천했어요!</span>
-                                </div>
-                            </div>
+                <> 
+                    {prop.suggest >= 5 ? 
+                            <>
+                                {visited ? 
+                                    <div className="flex flex-row">
+                                        <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                            onClick={unvisitClick}
+                                            onMouseEnter={handleMouseEnter}
+                                            onMouseLeave={handleMouseLeave}>
+                                                <TbShoeOff />
+                                        </p>
+                                        <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                            <span className="text-white text-sm font-bold">어라? 방문한 곳이 아닌가요?</span>
+                                        </div>
+                                    </div>
+                                :
+                                    <div className="flex flex-row">
+                                        <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                            onClick={visitClick}
+                                            onMouseEnter={handleMouseEnter}
+                                            onMouseLeave={handleMouseLeave}>
+                                                <TbShoe />
+                                        </p>
+                                        <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                            <span className="text-white text-sm font-bold">방문하셨나요?</span>
+                                        </div>
+                                    </div>
+                                }
+                            </>
                         :
-                            <div className="flex flex-row">
-                                <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
-                                    onClick={suggestClick}
-                                    onMouseEnter={handleMouseEnter}
-                                    onMouseLeave={handleMouseLeave}>
-                                        <FaRegThumbsUp />
-                                </p>
-                                <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                                    <span className="text-white text-sm font-bold">추천하실래요?</span>
-                                </div>
-                            </div>
-                    } 
+                            <>
+                                {suggested ? 
+                                    <div className="flex flex-row">
+                                        <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                            onClick={unsuggestClick}
+                                            onMouseEnter={handleMouseEnter}
+                                            onMouseLeave={handleMouseLeave}>
+                                                <FaThumbsUp />
+                                        </p>
+                                        <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                            <span className="text-white text-sm font-bold">이미 추천했어요!</span>
+                                        </div>
+                                    </div>
+                                :
+                                    <div className="flex flex-row">
+                                        <p className="ml-24 mr-2 text-5xl text-gray-600 cursor-pointer" 
+                                            onClick={suggestClick}
+                                            onMouseEnter={handleMouseEnter}
+                                            onMouseLeave={handleMouseLeave}>
+                                                <FaRegThumbsUp />
+                                        </p>
+                                        <div className={`flex items-center bg-gray-600 rounded-full px-3 py-1 mt-1 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                                            <span className="text-white text-sm font-bold">추천하실래요?</span>
+                                        </div>
+                                    </div>
+                            }
+                        </> 
+                    }   
                 </>
             )}
             

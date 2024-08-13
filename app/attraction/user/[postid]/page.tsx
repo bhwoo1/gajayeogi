@@ -9,6 +9,8 @@ import { MdOutlineCircle, MdCircle } from "react-icons/md";
 import AttractionPageAction from "@/app/components/Attraction/AttractionPageAction";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useRecoilState } from "recoil";
+import { selectedUserAtom } from "@/app/recoil/RecoilContext";
 
 const AttractionPage = (props: { params: { postid: number } }) => {
     const [attractionData, setAttractionData] = useState<RecieveAttraction>();
@@ -16,6 +18,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
     const {data: session, status: sessionStatus} = useSession();
     const router = useRouter();
+    const [selectedUser, setSelectedUser] = useRecoilState(selectedUserAtom)
 
     useEffect(() => {
         axios.get("http://localhost:8080/postread", {
@@ -42,7 +45,8 @@ const AttractionPage = (props: { params: { postid: number } }) => {
             router.push("/mypage");
         }
         else {
-            router.push(`/user/${attractionData?.postusername}`);
+            setSelectedUser(attractionData?.postuser || "");
+           router.push(`/user/${attractionData?.postusername}`);
         }
     }
 
@@ -91,7 +95,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                                     </div>
                                 </div>
                                 <div className="mb-8">
-                                    <AttractionPageAction postid={attractionData.postid} postuser={attractionData.postuser}/>
+                                    <AttractionPageAction postid={attractionData.postid} postuser={attractionData.postuser} suggest={Number(attractionData.suggest)}/>
                                 </div>
                             </div>
                         </div>
