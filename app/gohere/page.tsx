@@ -6,7 +6,7 @@ import NaverMap from "../components/Map/NaverMap";
 import Search from "../components/Search";
 // import AttractionList from "../components/AttractionList";
 
-const A:React.FC = () => {
+const gohere:React.FC = () => {
     return(
         <main className="flex min-h-screen flex-col items-center p-24">
             <MenuBar currentPage={"A"} />
@@ -17,4 +17,4 @@ const A:React.FC = () => {
     );
 }
 
-export default A;
+export default gohere;

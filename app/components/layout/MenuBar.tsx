@@ -23,7 +23,7 @@ const MenuBar:React.FC<Props> = ( {currentPage} ) => {
                     </p>
                 </div>
             </Link>
-            <Link href="/A">
+            <Link href="/gohere">
                 <div className="p-8 cursor-pointer">
                     <p className={currentPage === 'A' ? 
                             'font-bold text-xl text-gray-800 pb-2 border-b-4 border-black' 
@@ -34,7 +34,7 @@ const MenuBar:React.FC<Props> = ( {currentPage} ) => {
                     </p>
                 </div>
             </Link>
-            <Link href="/B">
+            <Link href="/wherewego">
                 <div className="p-8 cursor-pointer">
                     <p className={currentPage === 'B' ? 
                             'font-bold text-xl text-gray-800 pb-2 border-b-4 border-black' 

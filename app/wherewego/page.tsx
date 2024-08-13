@@ -6,7 +6,7 @@ import UserAttractionList from "../components/Attraction/UserAttractionList";
 import BestToggleSwitch from "../components/Attraction/BestToggleSwitch";
 import PlusButton from "../components/Attraction/PlusButton";
 
-const B: React.FC = () => {
+const wherewego: React.FC = () => {
     
     return (
         <main className="flex min-h-screen flex-col w-full items-center p-24">
@@ -20,4 +20,4 @@ const B: React.FC = () => {
     );
 }
 
-export default B;
+export default wherewego;
