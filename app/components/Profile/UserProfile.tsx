@@ -25,6 +25,9 @@ const UserProfile = (props: {username: string, userData: UserData}) => {
                   </div>
                 </div>
               </div>
+              <div className="mt-4">
+                <p className="text-sm text-gray-700">{props.userData.introduction}</p>
+              </div>
             </div>
     );
 }

@@ -26,6 +26,8 @@ const Registration: React.FC = () => {
     const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
     const { data: session, status: sessionStatus } = useSession();
     const [selectedAddress, setSelectedAddress] = useRecoilState(selectedAddressAtom);
+    const [charCount, setCharCount] = useState<number>(attraction.attractionExplain.length);
+    const maxLength = 200;
     const router = useRouter();
     
     
@@ -58,6 +60,11 @@ const Registration: React.FC = () => {
             alert('설명을 등록해주세요.');
             return; // 설명이 없으면 함수 종료
         };
+
+        if(attraction.attractionExplain.length > 200) {
+            alert("200자 이하로 입력해주세요!");
+            return;
+        }
 
         // 설명에 공백 문자를 특수문자로 변환
         const modifiedContent = attraction.attractionExplain.replace(/\n/g, "§");
@@ -133,6 +140,12 @@ const Registration: React.FC = () => {
             attractionAddress: address
         }));
     };
+
+    const handleIntroductionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const value = e.target.value;
+        setAttraction({ ...attraction, attractionExplain: e.target.value });
+        setCharCount(value.length);
+    }
     
 
     return (
@@ -176,7 +189,19 @@ const Registration: React.FC = () => {
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="attractionExplain" className="mb-2 font-medium text-gray-700">설명:</label>
-                            <textarea id="attractionExplain" name="attractionExplain" value={attraction.attractionExplain} onChange={(e) => setAttraction({ ...attraction, attractionExplain: e.target.value })} className="border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <textarea id="attractionExplain" name="attractionExplain" value={attraction.attractionExplain} onChange={(e) => handleIntroductionChange(e)} className={`border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                                charCount > maxLength ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                            }`} />
+                            <div className="flex justify-between items-center mt-1">
+                                <span
+                                className={`text-sm ${charCount > maxLength ? 'text-red-500' : 'text-gray-500'}`}
+                                >
+                                {charCount}/{maxLength}
+                                </span>
+                                {charCount > maxLength && (
+                                <span className="text-sm text-red-500">200자를 초과할 수 없습니다.</span>
+                                )}
+                            </div>
                         </div>
                         <button 
                             type="submit" 
