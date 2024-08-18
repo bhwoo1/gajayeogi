@@ -53,9 +53,12 @@ const AttractionPageAction = (prop: Props) => {
     const suggestClick = () => {
         const formData = new FormData();
         formData.append("postid", String(prop.postid));
-        formData.append("postuser", String(prop.postuser));
-        axios.post("http://localhost:8080/postsuggest", formData,  {
-            withCredentials: true,
+        formData.append("postuser", String(session?.user?.email));
+        axios.get("http://localhost:8080/postsuggest",{
+            params: {
+                postid: prop.postid,
+                postuser: String(session?.user?.email)
+            }
         })
         .then((res) => {
             alert("추천했습니다!");
@@ -71,8 +74,11 @@ const AttractionPageAction = (prop: Props) => {
         const formData = new FormData();
         formData.append("postid", String(prop.postid));
         formData.append("postuser", String(prop.postuser));
-        axios.post("http://localhost:8080/unpostsuggest", formData, {
-            withCredentials: true,
+        axios.get("http://localhost:8080/unpostsuggest", {
+            params: {
+                postid: prop.postid,
+                postuser: String(session?.user?.email)
+            }
         })
         .then((res) => {
             alert("추천 해제하였습니다!");
@@ -88,8 +94,11 @@ const AttractionPageAction = (prop: Props) => {
         const formData = new FormData();
         formData.append("reviewid", String(prop.postid));
         formData.append("reivewuser", String(prop.postuser));
-        axios.post("http://localhost:8080/visitcount", formData,  {
-            withCredentials: true,
+        axios.get("http://localhost:8080/visitcount", {
+            params: {
+                reviewid: prop.postid,
+                reivewuser: String(session?.user?.email)
+            }
         })
         .then((res) => {
             alert("이 장소에 방문하셨습니다!");
@@ -97,7 +106,7 @@ const AttractionPageAction = (prop: Props) => {
         })
         .catch((err) => {
             console.log(err);
-            alert("추천에 실패하였습니다.");
+            alert("실패하였습니다.");
         });
     };
 
@@ -105,8 +114,11 @@ const AttractionPageAction = (prop: Props) => {
         const formData = new FormData();
         formData.append("reviewid", String(prop.postid));
         formData.append("reviewuser", String(prop.postuser));
-        axios.post("http://localhost:8080/visituncount", formData, {
-            withCredentials: true,
+        axios.get("http://localhost:8080/visituncount", {
+            params: {
+                reviewid: prop.postid,
+                reivewuser: String(session?.user?.email)
+            }
         })
         .then((res) => {
             alert("이 장소를 방문 취소하셨습니다!");
@@ -116,7 +128,7 @@ const AttractionPageAction = (prop: Props) => {
             console.log(err);
             alert("방문 취소에 실패하였습니다.");
         })
-    }
+    };
 
     const attractionDelete = () => {
         if(prop.postuser != session?.user?.email) {
@@ -134,7 +146,7 @@ const AttractionPageAction = (prop: Props) => {
         })
         .then((res) => {
             alert('삭제하였습니다.');
-            router.push("/B");
+            router.push("/wherewego");
         })
         .catch((err) => {
             console.log(err);
@@ -170,7 +182,7 @@ const AttractionPageAction = (prop: Props) => {
                 </>
             ) : (
                 <> 
-                    {prop.suggest >= 5 ? 
+                    {/* {prop.suggest >= 1 ? 
                             <>
                                 {visited ? 
                                     <div className="flex flex-row">
@@ -197,8 +209,8 @@ const AttractionPageAction = (prop: Props) => {
                                         </div>
                                     </div>
                                 }
-                            </>
-                        :
+                            </> */}
+                        {/* : */}
                             <>
                                 {suggested ? 
                                     <div className="flex flex-row">
@@ -226,7 +238,7 @@ const AttractionPageAction = (prop: Props) => {
                                     </div>
                             }
                         </> 
-                    }   
+                    {/* }    */}
                 </>
             )}
             

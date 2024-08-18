@@ -47,7 +47,7 @@ export type TourAttraction = {
     sigungucode: string,
     tel: string,
     title: string
-}
+};
 
 export type AreaJsonType = {
     [key: string]: {
@@ -66,7 +66,23 @@ export type UserData = {
     reviewwriteids: string[],
     scrapids: string[],
     visitids: string[],
-}
+};
+
+export type ReviewData = {
+    originalpostid: string,
+    reviewcontent: string,
+    reviewid: string,
+    reviewimg: File | null,
+    reviewimgurl: string,
+    reviewlocation: string,
+    reviewoldimg: string,
+    reviewtitle: string,
+    reviewuser: string,
+    reviewusername: string,
+    reviewxpoint: string,
+    reviewypoint: string,
+    visitcount: string
+};
 
 export const areas: { [key: string]: string[] } = {
     "서울특별시": [

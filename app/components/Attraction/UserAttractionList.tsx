@@ -29,7 +29,7 @@ const UserAttractionList = () => {
                 setAttractionList(reversedList);
 
                 // suggest가 5 이상인 경우만 필터링하여 bestAttractionList에 저장
-                const bestAttractions = reversedList.filter((item: RecieveAttraction) => Number(item.suggest) >= 5);
+                const bestAttractions = reversedList.filter((item: RecieveAttraction) => Number(item.suggest) >= 1);
                 setBestAttractionList(bestAttractions);
 
                 console.log(res.data);

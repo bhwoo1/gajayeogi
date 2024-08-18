@@ -35,40 +35,40 @@ const NavBar:React.FC = () => {
 
     return(
         <header className="fixed left-0 right-0 top-0 py-4 z-50 user-not-selectable bg-white">
-        <nav className="container mx-auto flex items-center justify-between">
-            <Link href="/"><img src="/gajayeogi.png" alt="logo" width='150' height='30'/></Link>
-            <ul className="flex items-center justify-end space-x-4">
-            {session ? 
-                    (   
-                        <ul className="flex items-center justify-end space-x-4">
-                            <Link href="/mypage">
-                                <ul className="cursor-pointer flex items-center justify-end space-x-4">
-                                    <li>
-                                        <div className="rounded-full overflow-hidden border-gray-300 border-2">
-                                            {session?.user?.image &&
-                                                <Image src={`${session?.user.image}`} alt="main" width={30} height={30} />
-                                            }
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <p className="font-bold">{session?.user?.name}</p>
-                                    </li>
-                                </ul>
-                            </Link>
+            <nav className="container mx-auto flex items-center justify-between">
+                <Link href="/"><img src="/gajayeogi.png" alt="logo" width='150' height='30'/></Link>
+                <ul className="flex items-center justify-end space-x-4">
+                {session ? 
+                        (   
+                            <ul className="flex items-center justify-end space-x-4">
+                                <Link href="/mypage">
+                                    <ul className="cursor-pointer flex items-center justify-end space-x-4">
+                                        <li>
+                                            <div className="rounded-full overflow-hidden border-gray-300 border-2">
+                                                {session?.user?.image &&
+                                                    <Image src={`${session?.user.image}`} alt="main" width={30} height={30} />
+                                                }
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <p className="font-bold">{session?.user?.name}</p>
+                                        </li>
+                                    </ul>
+                                </Link>
+                                <li>
+                                    <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={() => signOut()}><p>로그아웃</p></button>
+                                </li>
+                            </ul>
+                        ) 
+                    : 
+                        (
                             <li>
-                                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={() => signOut()}><p>로그아웃</p></button>
+                                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={loginBtnClick}><p>로그인</p></button>
                             </li>
-                        </ul>
-                    ) 
-                : 
-                    (
-                        <li>
-                            <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={loginBtnClick}><p>로그인</p></button>
-                        </li>
-                    )
-                }
-            </ul>
-        </nav>
+                        )
+                    }
+                </ul>
+            </nav>
         </header>
     );
 }

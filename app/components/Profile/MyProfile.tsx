@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { UserData } from "@/app/Type";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+
 
 // 프로필 컴포넌트
 const MyProfile = (props: { userData: UserData }) => {
@@ -13,6 +15,7 @@ const MyProfile = (props: { userData: UserData }) => {
   const [introduction, setIntroduction] = useState<string>(props.userData.introduction || "");
   const [charCount, setCharCount] = useState<number>(introduction.length);
   const maxLength = 50;
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -26,6 +29,7 @@ const MyProfile = (props: { userData: UserData }) => {
       console.log(res);
       alert('자기소개가 수정되었습니다!');
       setEditMode(!editMode);
+      window.location.reload();
     })
     .catch((err) => {
       alert('자기소개 수정에 실패하였습니다!');
@@ -35,8 +39,8 @@ const MyProfile = (props: { userData: UserData }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-      setIntroduction(value);
-      setCharCount(value.length);
+    setIntroduction(value);
+    setCharCount(value.length);
   };
 
   const cancelBtnClick = () => {
@@ -54,7 +58,7 @@ const MyProfile = (props: { userData: UserData }) => {
         <div className="flex flex-col pl-6 pt-10">
           <p className="text-3xl font-bold">{session?.user?.name} 님.</p>
           <div className="flex flex-row">
-            <p className="mr-4">방문: {props.userData?.visitids?.length || 0}</p>
+            {/* <p className="mr-4">리뷰 작성: {props.userData?.reviewwriteids?.length || 0}</p> */}
             <p>등록: {props.userData?.postwriteids?.length || 0}</p>
           </div>
         </div>

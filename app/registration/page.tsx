@@ -82,7 +82,7 @@ const Registration: React.FC = () => {
 
         console.log(attraction);
 
-        axios.post("http://localhost:8080/postwrite", formData,{
+        axios.post("http://localhost:8080/postwrite", formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data',
             }
@@ -90,7 +90,7 @@ const Registration: React.FC = () => {
         .then((res) => {
             console.log(res);
             alert('등록이 완료되었습니다.');
-            router.push("/B");
+            router.push("/wherewego");
         })
         .catch((err) => {
             console.log(err);

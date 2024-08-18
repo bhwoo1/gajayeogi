@@ -20,7 +20,7 @@ const UserProfile = (props: {username: string, userData: UserData}) => {
                 <div className="flex flex-col pl-6 pt-10">
                     <p className="text-3xl font-bold">{props.username} 님.</p>
                     <div className="flex flex-row">
-                      <p className="mr-4">방문: {props.userData.visitids?.length || 0}</p>
+                      {/* <p className="mr-4">방문: {props.userData.visitids?.length || 0}</p> */}
                       <p>등록: {props.userData.postwriteids?.length || 0}</p>
                   </div>
                 </div>

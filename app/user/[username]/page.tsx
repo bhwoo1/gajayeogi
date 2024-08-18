@@ -46,7 +46,7 @@ const UserPage = (props: {params: {username: string}}) => {
                         <p className="text-gray-600">{props.params.username} 님은 아직 등록하지 않으셨어요!</p>
                       )}
                     </div>
-
+{/* 
                     <div className="pb-12 border-b border-gray-200 mb-8">
                       <h2 className="text-2xl font-semibold text-gray-800 mb-4">{props.params.username} 님이 주목하는 장소</h2>
                       {userData.scrapids?.length ? (
@@ -54,16 +54,16 @@ const UserPage = (props: {params: {username: string}}) => {
                       ) : (
                         <p className="text-gray-600">{props.params.username} 님은 아직 어떤 장소도 주목하지 않으세요!</p>
                       )}
-                    </div>
+                    </div> */}
 
-                    <div className="pb-12">
+                    {/* <div className="pb-12">
                       <h2 className="text-2xl font-semibold text-gray-800 mb-4">{props.params.username} 님이 방문한 장소</h2>
                       {userData.visitids?.length ? (
                         <ProfileAttractionList ids={userData.visitids} />
                       ) : (
                         <p className="text-gray-600">{props.params.username} 님은 아직 어떤 장소도 방문하지 않으셨어요!</p>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 </>
               }

@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { selectedUserAtom } from "@/app/recoil/RecoilContext";
+import Review from "@/app/components/Attraction/Review";
 
 const AttractionPage = (props: { params: { postid: number } }) => {
     const [attractionData, setAttractionData] = useState<RecieveAttraction>();
@@ -98,6 +99,10 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                                     <AttractionPageAction postid={attractionData.postid} postuser={attractionData.postuser} suggest={Number(attractionData.suggest)}/>
                                 </div>
                             </div>
+                        </div>
+                        <div className="w-3/5">
+                            <p className="pt-12 text-3xl font-bold mb-4 text-center text-gray-800 border-b-2 border-gray-300 pb-2">한 줄 리뷰</p>
+                            <Review postuser={attractionData.postuser} postid={attractionData.postid} />
                         </div>
                     </>
                 )}

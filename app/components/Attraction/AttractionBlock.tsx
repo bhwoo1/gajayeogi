@@ -1,6 +1,5 @@
-import { RecieveAttraction, TourAttraction } from "@/app/Type";
+import { TourAttraction } from "@/app/Type";
 import React from "react";
-import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 const AttractionBlock = (props: {attractionData: TourAttraction}) => {
     return(
