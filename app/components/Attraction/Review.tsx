@@ -80,7 +80,7 @@ const Review = (props: {postuser: string, postid: string}) => {
         if (newReview.reviewimg) {
             formData.append("reviewimg", newReview.reviewimg);  // 수정된 부분
         }
-        axios.post("http://localhost:8080/reviewwrite", formData, {
+        axios.post("http://117.52.84.144:8080/reviewwrite", formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data',
             }

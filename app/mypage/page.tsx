@@ -27,7 +27,7 @@ const MyPage:React.FC = () => {
       const formData = new FormData();
       formData.append("user", String(session?.user?.email));
       
-      axios.post("http://localhost:8080/readuser",formData)
+      axios.post("http://117.52.84.144:8080/readuser",formData)
       .then((res) => {
         setUserData(res.data);
         console.log(res.data);

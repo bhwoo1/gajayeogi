@@ -19,7 +19,7 @@ const UserPage = (props: {params: {username: string}}) => {
       console.log(selectedUser);
       const formData = new FormData();
       formData.append("user", selectedUser);
-      axios.post("http://localhost:8080/readuser", formData, {
+      axios.post("http://117.52.84.144:8080/readuser", formData, {
         withCredentials: true
       })
       .then((res) => {

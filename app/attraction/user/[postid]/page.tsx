@@ -22,7 +22,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
     const [selectedUser, setSelectedUser] = useRecoilState(selectedUserAtom)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/postread", {
+        axios.get("http://117.52.84.144:8080/postread", {
             params: { postid: props.params.postid }
         })
             .then((res) => {

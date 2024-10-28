@@ -106,7 +106,7 @@ const UserAttractionList = () => {
         const searchUrl = searchOptionValue === "title" ? "postsearch" : "postsearch";
         const searchParams = searchOptionValue === "title" ? { posttitle: keyword } : { postusername: keyword };
 
-        axios.get(`http://localhost:8080/${searchUrl}`, {
+        axios.get(`http://117.52.84.144:8080/${searchUrl}`, {
             params: searchParams,
             withCredentials: true
         })

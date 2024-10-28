@@ -26,7 +26,7 @@ const AttractionPageAction = (prop: Props) => {
             const fetchScrap = async () => {
                     const formData = new FormData();
                     formData.append("user", String(session?.user?.email));
-                    await axios.post("http://localhost:8080/readuser", formData, {
+                    await axios.post("http://117.52.84.144:8080/readuser", formData, {
                         withCredentials: true
                     })
                     .then((res) => {

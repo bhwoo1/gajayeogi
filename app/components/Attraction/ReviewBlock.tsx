@@ -11,7 +11,7 @@ const ReviewBlock = (props: {review: ReviewData}) => {
     
 
     const deleteComment = (reviewid: string, username: string) => {
-        axios.delete(`http://localhost:8080/reviewdelete`, {
+        axios.delete(`http://117.52.84.144:8080/reviewdelete`, {
             params: {
                 reviewid: reviewid,
                 reviewuser: username
@@ -34,7 +34,7 @@ const ReviewBlock = (props: {review: ReviewData}) => {
                 {props.review.reviewimgurl && (
                     <div>
                         <img
-                            src={"http://localhost:8080/" + props.review.reviewimgurl}
+                            src={"http://117.52.84.144:8080" + props.review.reviewimgurl}
                             alt="title_img"
                             className="w-full h-full object-cover rounded-md"
                         />

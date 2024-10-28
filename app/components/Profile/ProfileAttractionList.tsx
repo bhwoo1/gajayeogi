@@ -18,7 +18,7 @@ const ProfileAttractionList = (props: {ids: string[]}) => {
                 let fetchedAttractions: RecieveAttraction[] = [];
                 try {
                     const promises = props.ids.map(async (id) => {
-                        const res = await axios.get("http://localhost:8080/postread", {
+                        const res = await axios.get("http://117.52.84.144:8080/postread", {
                             params: { postid: id },
                             withCredentials: true,
                         });
