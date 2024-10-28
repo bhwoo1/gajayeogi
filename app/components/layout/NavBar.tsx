@@ -21,7 +21,7 @@ const NavBar:React.FC = () => {
             formData.append("user", String(session.user.email));
             formData.append("username", String(session.user.name));
             
-            axios.post('http://117.52.84.144:8080/saveuser', formData, {
+            axios.post('https://gajayeogi.shop/saveuser', formData, {
                 withCredentials: true
             })
             .then((res) => {

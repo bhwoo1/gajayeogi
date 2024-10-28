@@ -82,7 +82,7 @@ const Registration: React.FC = () => {
 
         console.log(attraction);
 
-        axios.post("http://117.52.84.144:8080/postwrite", formData, {
+        axios.post("https://gajayeogi.shop/postwrite", formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data',
             }

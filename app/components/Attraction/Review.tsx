@@ -35,7 +35,7 @@ const Review = (props: {postuser: string, postid: string}) => {
     useEffect(() => {
         const formData = new FormData();
         formData.append("originalpostid", String(props.postid));
-        axios.post("http://localhost:8080/reviewread", formData, {
+        axios.post("https://gajayeogi.shop/reviewread", formData, {
             withCredentials: true,
         })
         .then((res) => {
@@ -80,7 +80,7 @@ const Review = (props: {postuser: string, postid: string}) => {
         if (newReview.reviewimg) {
             formData.append("reviewimg", newReview.reviewimg);  // 수정된 부분
         }
-        axios.post("http://117.52.84.144:8080/reviewwrite", formData, {
+        axios.post("https://gajayeogi.shop/reviewwrite", formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data',
             }

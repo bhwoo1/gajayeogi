@@ -23,7 +23,7 @@ const UserAttractionList = () => {
     const itemsPerPage = 4;
 
     useEffect(() => {
-        axios.get("http://localhost:8080/postallread")
+        axios.get("https://gajayeogi.shop/postallread")
             .then((res) => {
                 const reversedList: RecieveAttraction[] = res.data.reverse();
                 setAttractionList(reversedList);
@@ -106,7 +106,7 @@ const UserAttractionList = () => {
         const searchUrl = searchOptionValue === "title" ? "postsearch" : "postsearch";
         const searchParams = searchOptionValue === "title" ? { posttitle: keyword } : { postusername: keyword };
 
-        axios.get(`http://117.52.84.144:8080/${searchUrl}`, {
+        axios.get(`https://gajayeogi.shop/${searchUrl}`, {
             params: searchParams,
             withCredentials: true
         })

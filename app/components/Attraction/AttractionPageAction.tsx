@@ -26,7 +26,7 @@ const AttractionPageAction = (prop: Props) => {
             const fetchScrap = async () => {
                     const formData = new FormData();
                     formData.append("user", String(session?.user?.email));
-                    await axios.post("http://117.52.84.144:8080/readuser", formData, {
+                    await axios.post("https://gajayeogi.shop/readuser", formData, {
                         withCredentials: true
                     })
                     .then((res) => {
@@ -54,7 +54,7 @@ const AttractionPageAction = (prop: Props) => {
         const formData = new FormData();
         formData.append("postid", String(prop.postid));
         formData.append("postuser", String(session?.user?.email));
-        axios.get("http://localhost:8080/postsuggest",{
+        axios.get("https://gajayeogi.shop/postsuggest",{
             params: {
                 postid: prop.postid,
                 postuser: String(session?.user?.email)
@@ -74,7 +74,7 @@ const AttractionPageAction = (prop: Props) => {
         const formData = new FormData();
         formData.append("postid", String(prop.postid));
         formData.append("postuser", String(prop.postuser));
-        axios.get("http://localhost:8080/unpostsuggest", {
+        axios.get("https://gajayeogi.shop/unpostsuggest", {
             params: {
                 postid: prop.postid,
                 postuser: String(session?.user?.email)
@@ -94,7 +94,7 @@ const AttractionPageAction = (prop: Props) => {
         const formData = new FormData();
         formData.append("reviewid", String(prop.postid));
         formData.append("reivewuser", String(prop.postuser));
-        axios.get("http://localhost:8080/visitcount", {
+        axios.get("https://gajayeogi.shop/visitcount", {
             params: {
                 reviewid: prop.postid,
                 reivewuser: String(session?.user?.email)
@@ -114,7 +114,7 @@ const AttractionPageAction = (prop: Props) => {
         const formData = new FormData();
         formData.append("reviewid", String(prop.postid));
         formData.append("reviewuser", String(prop.postuser));
-        axios.get("http://localhost:8080/visituncount", {
+        axios.get("https://gajayeogi.shop/visituncount", {
             params: {
                 reviewid: prop.postid,
                 reivewuser: String(session?.user?.email)
@@ -137,7 +137,7 @@ const AttractionPageAction = (prop: Props) => {
         }
 
 
-        axios.delete("http://localhost:8080/postdelete", {
+        axios.delete("https://gajayeogi.shop/postdelete", {
             params: {
                 postid: prop.postid,
                 postuser: session?.user.email

@@ -22,7 +22,7 @@ const MyProfile = (props: { userData: UserData }) => {
     const formData = new FormData();
     formData.append("user", String(session?.user?.email));
     formData.append("introduction", introduction);
-    axios.post("http://117.52.84.144:8080/savenintroduction", formData, {
+    axios.post("https://gajayeogi.shop/savenintroduction", formData, {
       withCredentials: true,
     })
     .then((res) => {

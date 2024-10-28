@@ -7,7 +7,7 @@ const UserAttractionBlock = (props: { attractionData: RecieveAttraction }) => {
         <div className="cursor-pointer flex flex-row w-full max-w-none p-4 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition duration-300 h-44">
             <div className="relative w-24 h-24 overflow-hidden rounded-lg">
                 <img
-                    src={"http://117.52.84.144:8080" + props.attractionData.postimgurl[0]}
+                    src={"https://gajayeogi.shop" + props.attractionData.postimgurl[0]}
                     alt="title_img"
                     className="w-full h-full object-cover rounded-md"
                 />

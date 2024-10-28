@@ -10,7 +10,7 @@ const ImageModal: React.FC<Prop> = (props: Prop) => {
 
     useEffect(() => {
         const image = new Image();
-        image.src = "http://117.52.84.144:8080" + props.image;
+        image.src = "https://gajayeogi.shop" + props.image;
         image.onload = () => {
             if (parentRef.current) {
                 const screenWidth = window.innerWidth;

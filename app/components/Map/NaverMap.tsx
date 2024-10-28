@@ -18,7 +18,7 @@ const NaverMap = () => {
     useEffect(() => {
         const fetchTourAttractions = async () => {
             try {
-                const response = await axios.get("http://117.52.84.144:8080/api/tour/info", {
+                const response = await axios.get("https://gajayeogi.shop/api/tour/info", {
                     params: {
                         postxpoint: userLocation.longitude,
                         postypoint: userLocation.latitude
