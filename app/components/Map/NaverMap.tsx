@@ -132,6 +132,7 @@ const NaverMap = () => {
         };
     
         loadNaverMapScript();
+
     
     }, [tourAPIAttraction, userLocation]);
 
