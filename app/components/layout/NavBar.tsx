@@ -25,7 +25,6 @@ const NavBar:React.FC = () => {
                 withCredentials: true
             })
             .then((res) => {
-                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
