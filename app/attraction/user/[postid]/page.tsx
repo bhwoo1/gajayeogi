@@ -27,9 +27,14 @@ const AttractionPage = (props: { params: { postid: number } }) => {
         })
             .then((res) => {
                 console.log(res.data.postimgurl);
-                setAttractionData(res.data);
-                setSelectedImage(res.data.postimgurl[0]);
-                setSelectedIndex(0);
+                const updatedPostImgUrls = res.data.postimgurl.map((url: string) => 
+                    url.replace("/home/ftpuser", "") // "/home/ftpuser" 부분 제거
+                );
+                
+                console.log(updatedPostImgUrls[0]); // 확인용 출력
+                setAttractionData({ ...res.data, postimgurl: updatedPostImgUrls });
+                setSelectedImage(updatedPostImgUrls[0]);
+                setSelectedIndex(0);;
             })
             .catch((err) => {
                 console.log(err);
