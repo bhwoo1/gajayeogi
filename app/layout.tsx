@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "가자여기",
   description: "가자여기",
   icons : {
-    icon: "/gajayeogi_small.png"
+    icon: "/gajayeogi_small_white_bg.png"
   }
 };
 
