@@ -26,7 +26,7 @@ const MapModal: React.FC<MapModalProps> = ({
   const [selectedLocation, setSelectedLocation] = useRecoilState(selectedLocationAtom);
   const [selectedAddress, setSelectedAddress] = useRecoilState(selectedAddressAtom);
   const [searchAddress, setSearchAddress] = useState<string>("");
-  const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_API_KEY;
+  const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
 
 
   useEffect(() => {

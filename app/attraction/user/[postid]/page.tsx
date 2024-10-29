@@ -62,7 +62,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                         <div className="flex flex-row gap-8 mb-8">
                             <div className="flex flex-col mr-24">
                                 <div className="relative w-96 h-96 overflow-hidden mb-12">
-                                    <img src={"http://localhost:8080/" + selectedImage} alt="selected_image" className="w-full h-full object-contain rounded-md"   />
+                                    <img src={"https://gajayeogi.shop/" + selectedImage} alt="selected_image" className="w-full h-full object-contain rounded-md"   />
                                 </div>
                                 <div className="flex flex-row gap-2">
                                     {attractionData?.postimgurl?.map((image, index) => (

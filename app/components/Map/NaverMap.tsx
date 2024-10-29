@@ -5,17 +5,19 @@ import axios from 'axios';
 import { TourAttraction } from '../../Type';
 import AttractionList from '../Attraction/AttractionList';
 import { FaSearch } from 'react-icons/fa';
+import Script from 'next/script';
 
 const NaverMap = () => {
     const [userLocation, setUserLocation] = useRecoilState(UserLocationAtom);
     const selectedAttraction = useRecoilValue(selectedAttractionAtom);
     const mapElement = useRef<HTMLDivElement>(null);
     const mapInstance = useRef<any>(null);
-    const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_API_KEY;
+    const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
     const [tourAPIAttraction, setTourAPIAttraction] = useState<TourAttraction[]>([]);
     const [searchKeyword, setSearchKeyword] = useState<string>("");
 
     useEffect(() => {
+        console.log(naverMapApiKey)
         const fetchTourAttractions = async () => {
             try {
                 const response = await axios.get("https://gajayeogi.shop/api/tour/info", {
@@ -38,6 +40,7 @@ const NaverMap = () => {
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
             script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
+            // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv&submodules=geocoder`;
             script.async = true;
             script.onload = () => {
                 console.log("Naver Map Script Loaded");
