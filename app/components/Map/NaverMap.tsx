@@ -52,7 +52,7 @@ const NaverMap = () => {
 
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
-            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
+            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
             script.async = true;
             script.onload = () => {
                 initializeMap();
