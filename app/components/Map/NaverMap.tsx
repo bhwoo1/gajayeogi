@@ -5,7 +5,6 @@ import axios from 'axios';
 import { TourAttraction } from '../../Type';
 import AttractionList from '../Attraction/AttractionList';
 import { FaSearch } from 'react-icons/fa';
-import Script from 'next/script';
 
 const NaverMap = () => {
     const [userLocation, setUserLocation] = useRecoilState(UserLocationAtom);
@@ -17,7 +16,6 @@ const NaverMap = () => {
     const [searchKeyword, setSearchKeyword] = useState<string>("");
 
     useEffect(() => {
-        console.log(naverMapApiKey)
         const fetchTourAttractions = async () => {
             try {
                 const response = await axios.get("https://gajayeogi.shop/api/tour/info", {
@@ -37,17 +35,27 @@ const NaverMap = () => {
     }, [userLocation]);
 
     useEffect(() => {
+        // const loadNaverMapScript = () => {
+        //     const script = document.createElement('script');
+        //     script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
+        //     // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv&submodules=geocoder`;
+        //     script.async = true;
+        //     script.onload = () => {
+        //         console.log("Naver Map Script Loaded");
+        //         initializeMap();
+        //     };
+        //     script.onerror = () => {
+        //         console.error("Failed to load Naver Map Script");
+        //     };
+        //     document.head.appendChild(script);
+        // };
+
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
-            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
-            // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv&submodules=geocoder`;
+            script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;
             script.async = true;
             script.onload = () => {
-                console.log("Naver Map Script Loaded");
                 initializeMap();
-            };
-            script.onerror = () => {
-                console.error("Failed to load Naver Map Script");
             };
             document.head.appendChild(script);
         };

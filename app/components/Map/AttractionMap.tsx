@@ -12,8 +12,6 @@ const AttractionMap = ({ attractionLat, attractionLng }: Props) => {
     const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
 
     useEffect(() => {
-        console.log(attractionLat + ", " + attractionLng);
-
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
             script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`;

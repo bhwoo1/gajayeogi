@@ -45,7 +45,7 @@ const ImageModal: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center" onClick={handleClickOutside}>
             <div ref={parentRef} className="relative bg-black bg-opacity-60 p-4" onClick={props.closeModal}>
-                <img src={"http://localhost:8080/" + props.image} alt="modal_image" className="max-w-full max-h-full mx-auto" />
+                <img src={"https://gajayeogi.shop/" + props.image} alt="modal_image" className="max-w-full max-h-full mx-auto" />
             </div>
         </div>
     );
