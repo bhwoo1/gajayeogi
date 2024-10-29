@@ -33,7 +33,7 @@ const UserAttractionList = () => {
                 setBestAttractionList(bestAttractions);
             })
             .catch((err) => {
-                console.log(err);
+                console.log('이거 뭐임' + err);
             });
     }, []);
 
