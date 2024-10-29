@@ -10,10 +10,6 @@ import { useRecoilValue } from "recoil";
 const AttractionPage = (props: {params: {contentid: string}}) => {
     const selectedAttraction = useRecoilValue(selectedAttractionAtom);
 
-    useEffect(() => {
-        console.log(selectedAttraction);
-    })
-
     return(
         <main className="flex min-h-screen flex-col p-24">
             <MenuBar currentPage={"A"} />

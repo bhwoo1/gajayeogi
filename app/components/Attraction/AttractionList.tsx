@@ -18,7 +18,6 @@ const AttractionList = (props: { attractionArray: TourAttraction[] }) => {
     };
 
     const handleMouseEnter = (attraction: TourAttraction) => {
-        console.log(attraction);
         setSelectedAttraction(attraction);
     }
 

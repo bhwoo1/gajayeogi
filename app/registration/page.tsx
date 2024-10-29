@@ -80,15 +80,12 @@ const Registration: React.FC = () => {
         formData.append('postuser', String(session?.user?.email));
         formData.append('postusername', String(session?.user?.name));
 
-        console.log(attraction);
-
         axios.post("https://gajayeogi.shop/postwrite", formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data',
             }
         })
         .then((res) => {
-            console.log(res);
             alert('등록이 완료되었습니다.');
             router.push("/wherewego");
         })

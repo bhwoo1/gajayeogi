@@ -26,7 +26,6 @@ const AttractionPage = (props: { params: { postid: number } }) => {
             params: { postid: props.params.postid }
         })
             .then((res) => {
-                console.log(res.data);
                 setAttractionData(res.data);
                 setSelectedImage(res.data.postimgurl[0]);
                 setSelectedIndex(0);

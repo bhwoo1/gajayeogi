@@ -30,7 +30,6 @@ const MyPage:React.FC = () => {
       axios.post("https://gajayeogi.shop/readuser",formData)
       .then((res) => {
         setUserData(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

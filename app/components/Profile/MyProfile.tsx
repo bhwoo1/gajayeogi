@@ -26,7 +26,6 @@ const MyProfile = (props: { userData: UserData }) => {
       withCredentials: true,
     })
     .then((res) => {
-      console.log(res);
       alert('자기소개가 수정되었습니다!');
       setEditMode(!editMode);
       window.location.reload();

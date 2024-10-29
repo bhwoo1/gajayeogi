@@ -202,7 +202,6 @@ export const useMap = (): MapFunctions => {
 
   // 사용자가 검색한 주소를 좌표로 변환(지오코딩)
   const handleSearch = (address: string) => {
-    console.log(address);
     naver.maps.Service.geocode(
       { query: address },
       function (status, res) {
@@ -215,8 +214,6 @@ export const useMap = (): MapFunctions => {
           const resAddress = res.v2.addresses[0];
           const lng = parseFloat(resAddress.x);
           const lat = parseFloat(resAddress.y);
-          console.log(resAddress.roadAddress);
-          console.log("lat= " + lat + ", lng= " + lng);
 
 
           setSelectedLocation({ latitude: lat, longitude: lng });
