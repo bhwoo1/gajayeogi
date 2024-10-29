@@ -3,11 +3,13 @@ import React from "react";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 const UserAttractionBlock = (props: { attractionData: RecieveAttraction }) => {
+    const postimgurl = props.attractionData.postimgurl[0].replace("/home/ftpuser", "");
+
     return (
         <div className="cursor-pointer flex flex-row w-full max-w-none p-4 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition duration-300 h-44">
             <div className="relative w-24 h-24 overflow-hidden rounded-lg">
                 <img
-                    src={"https://gajayeogi.shop" + props.attractionData.postimgurl[0]}
+                    src={`https://gajayeogi.shop${postimgurl}`}
                     alt="title_img"
                     className="w-full h-full object-cover rounded-md"
                 />
