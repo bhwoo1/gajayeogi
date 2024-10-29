@@ -25,7 +25,7 @@ export const selectedLocationAtom = atom<Location>({
 // 사용자가 선택한 위치 주소
 export const selectedAddressAtom = atom({
     key: "SelectedAddressState",
-    default: "서울특별시 중구 세종대로 110"
+    default: ""
 });
 
 export const selectedUserAtom = atom({
