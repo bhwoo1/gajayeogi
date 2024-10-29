@@ -28,10 +28,10 @@ export default function RootLayout({
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}`}
           strategy="beforeInteractive"
         /> */}
-        <Script
+        {/* <Script
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`}
           strategy="beforeInteractive"
-        />
+        /> */}
         {/* <Script
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv&submodules=geocoder`}
           strategy="beforeInteractive"

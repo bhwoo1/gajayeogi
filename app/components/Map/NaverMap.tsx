@@ -35,20 +35,6 @@ const NaverMap = () => {
     }, [userLocation]);
 
     useEffect(() => {
-        // const loadNaverMapScript = () => {
-        //     const script = document.createElement('script');
-        //     script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
-        //     // script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=li8s3sk6dv&submodules=geocoder`;
-        //     script.async = true;
-        //     script.onload = () => {
-        //         console.log("Naver Map Script Loaded");
-        //         initializeMap();
-        //     };
-        //     script.onerror = () => {
-        //         console.error("Failed to load Naver Map Script");
-        //     };
-        //     document.head.appendChild(script);
-        // };
 
         const loadNaverMapScript = () => {
             const script = document.createElement('script');
