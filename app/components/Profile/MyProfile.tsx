@@ -56,6 +56,7 @@ const MyProfile = (props: { userData: UserData }) => {
         </div>
         <div className="flex flex-col pl-6 pt-10">
           <p className="text-3xl font-bold">{session?.user?.name} 님.</p>
+          <p className="text-xl font-bold">{session?.user?.email}</p>
           <div className="flex flex-row">
             {/* <p className="mr-4">리뷰 작성: {props.userData?.reviewwriteids?.length || 0}</p> */}
             <p>등록: {props.userData?.postwriteids?.length || 0}</p>
