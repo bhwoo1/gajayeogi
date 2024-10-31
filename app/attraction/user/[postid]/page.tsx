@@ -26,7 +26,6 @@ const AttractionPage = (props: { params: { postid: number } }) => {
             params: { postid: props.params.postid }
         })
             .then((res) => {
-                console.log(res.data.postimgurl);
                 const updatedPostImgUrls = res.data.postimgurl.map((url: string) => 
                     url.replace("/home/ftpuser", "") // "/home/ftpuser" 부분 제거
                 );
