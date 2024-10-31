@@ -26,7 +26,10 @@ const UserAttractionBlock = (props: { attractionData: RecieveAttraction }) => {
                 <div className="flex flex-row items-center mt-2 flex-grow">
                     <FaQuoteLeft className="text-2xl text-gray-400 mr-2" />
                     <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                        {props.attractionData.postcontent.replace(/§/g, " ")}
+                        {props.attractionData.postcontent.length > 10
+                            ? props.attractionData.postcontent.replace(/§/g, " ").substring(0, 10) + "..."
+                            : props.attractionData.postcontent.replace(/§/g, " ")
+                        }
                     </p>
                     <FaQuoteRight className="text-2xl text-gray-400 ml-2" />
                 </div>
