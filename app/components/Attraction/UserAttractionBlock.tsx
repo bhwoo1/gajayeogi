@@ -4,6 +4,18 @@ import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 const UserAttractionBlock = (props: { attractionData: RecieveAttraction }) => {
     const postimgurl = props.attractionData.postimgurl[0].replace("/home/ftpuser", "");
+    
+
+    const makeShortContent = (content: string) => {
+        if (content.length > 10) {
+            return content.substring(0,10) + "...";
+        }
+        else {
+            return content.replace(/§/g, " ");
+        }
+    }
+
+    const shortContent = makeShortContent(props.attractionData.postcontent);
 
     return (
         <div className="cursor-pointer flex flex-row w-full max-w-none p-4 bg-white shadow-lg rounded-lg hover:bg-gray-50 transition duration-300 h-44">
@@ -26,10 +38,11 @@ const UserAttractionBlock = (props: { attractionData: RecieveAttraction }) => {
                 <div className="flex flex-row items-center mt-2 flex-grow">
                     <FaQuoteLeft className="text-2xl text-gray-400 mr-2" />
                     <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                        {props.attractionData.postcontent.length > 10
+                        {/* {props.attractionData.postcontent.length > 10
                             ? props.attractionData.postcontent.replace(/§/g, " ").substring(0, 10) + "..."
                             : props.attractionData.postcontent.replace(/§/g, " ")
-                        }
+                        } */}
+                        {shortContent}
                     </p>
                     <FaQuoteRight className="text-2xl text-gray-400 ml-2" />
                 </div>
