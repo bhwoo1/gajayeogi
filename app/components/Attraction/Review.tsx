@@ -18,7 +18,7 @@ const initialReviewState: ReviewData = {
     reviewxpoint: "",
     reviewypoint: "",
     visitcount: "",
-    reviewimgurl: "", 
+    reviewimgurl: [], 
     reviewlocation: ""
 }
 
@@ -31,16 +31,20 @@ const Review = (props: {postuser: string, postid: string}) => {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [modalMode, setModalMode] = useState<boolean>(false);
     const [modalImage, setModalImage] = useState<string>("");
+    const [reviewImg, setReviewImg] = useState<string>("");
 
     useEffect(() => {
         const formData = new FormData();
         formData.append("originalpostid", String(props.postid));
+        
         axios.post("https://gajayeogi.shop/reviewread", formData, {
             withCredentials: true,
         })
         .then((res) => {
             console.log(res.data);
             setReviews(res.data);
+            const imgurl = res.data.reviewimgurl[0].replace("/home/ftpuser", "");
+            setReviewImg(imgurl);
         })
         .catch((err) => {
             console.log(err);
@@ -115,7 +119,7 @@ const Review = (props: {postuser: string, postid: string}) => {
             <ul className="space-y-4">
                 {reviews.map((review) => (
                     <li key={review.reviewid} className="border border-gray-300 p-4 rounded-md">
-                        <ReviewBlock review={review} />
+                        <ReviewBlock review={review} reviewImg={reviewImg} />
                     </li>
                 ))}
             </ul>

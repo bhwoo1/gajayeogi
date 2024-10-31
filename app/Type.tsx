@@ -73,7 +73,7 @@ export type ReviewData = {
     reviewcontent: string,
     reviewid: string,
     reviewimg: File | null,
-    reviewimgurl: string,
+    reviewimgurl: string[],
     reviewlocation: string,
     reviewoldimg: string,
     reviewtitle: string,

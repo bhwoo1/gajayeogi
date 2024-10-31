@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa6";
 import ImageModal from "./ImgaeModal";
 
-const ReviewBlock = (props: {review: ReviewData}) => {
+const ReviewBlock = (props: {review: ReviewData, reviewImg: string}) => {
     const {data: session} = useSession();
     const [editCommentMode, setEditCommentMode] = useState<boolean>(false);
     
@@ -34,7 +34,7 @@ const ReviewBlock = (props: {review: ReviewData}) => {
                 {props.review.reviewimgurl.length > 0 && (
                     <div>
                         <img
-                            src={"https://gajayeogi.shop" + props.review.reviewimgurl}
+                            src={`https://gajayeogi.shop${props.reviewImg}`}
                             alt="title_img"
                             className="w-full h-full object-cover rounded-md"
                         />
