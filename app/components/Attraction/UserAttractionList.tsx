@@ -25,7 +25,6 @@ const UserAttractionList = () => {
     useEffect(() => {
         axios.get("https://gajayeogi.shop/postallread")
             .then((res) => {
-                console.log(res.data);
                 const reversedList: RecieveAttraction[] = res.data.reverse();
                 setAttractionList(reversedList);
 
