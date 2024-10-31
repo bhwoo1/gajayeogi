@@ -1,13 +1,17 @@
 import { ReviewData, TourAttraction } from "@/app/Type";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa6";
 import ImageModal from "./ImgaeModal";
 
 const ReviewBlock = (props: {review: ReviewData, reviewImg: string}) => {
     const {data: session} = useSession();
     const [editCommentMode, setEditCommentMode] = useState<boolean>(false);
+
+    useEffect(() => {
+        console.log(props.reviewImg);
+    }, [])
     
 
     const deleteComment = (reviewid: string, username: string) => {
@@ -31,7 +35,7 @@ const ReviewBlock = (props: {review: ReviewData, reviewImg: string}) => {
     return (
         <div className="relative flex flex-row w-full p-4 bg-white rounded-lg">
             <div className="relative w-24 h-24 overflow-hidden rounded-lg">
-                {props.review.reviewimgurl.length > 0 && (
+                {props.reviewImg && (
                     <div>
                         <img
                             src={`https://gajayeogi.shop${props.reviewImg}`}
