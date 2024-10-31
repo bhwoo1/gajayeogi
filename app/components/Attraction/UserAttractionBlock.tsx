@@ -7,8 +7,8 @@ const UserAttractionBlock = (props: { attractionData: RecieveAttraction }) => {
     
 
     const makeShortContent = (content: string) => {
-        if (content.length > 20) {
-            return content.substring(0,20) + "...";
+        if (content.length > 30) {
+            return content.substring(0,30) + "...";
         }
         else {
             return content.replace(/§/g, " ");
