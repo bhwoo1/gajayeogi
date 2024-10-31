@@ -79,7 +79,7 @@ const AttractionPage = (props: { params: { postid: number } }) => {
                                 <h1 className="text-4xl font-bold mb-2">{attractionData.posttitle}</h1>
                                 <p className="text-gray-600 mb-4"><button onClick={userBtnClick}>{attractionData.postusername}</button> 님이 등록</p>
                                 <div className="mb-8">
-                                    <p className="text-sm">
+                                    <p className="text-sm max-w-24">
                                         {attractionData?.postcontent && attractionData.postcontent.split('§').map((line, index) => (
                                             <React.Fragment key={index}>
                                                 {line}
