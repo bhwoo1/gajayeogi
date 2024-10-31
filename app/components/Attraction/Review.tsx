@@ -39,6 +39,7 @@ const Review = (props: {postuser: string, postid: string}) => {
             withCredentials: true,
         })
         .then((res) => {
+            console.log(res.data);
             setReviews(res.data);
         })
         .catch((err) => {
