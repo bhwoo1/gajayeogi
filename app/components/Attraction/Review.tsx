@@ -43,8 +43,7 @@ const Review = (props: {postuser: string, postid: string}) => {
         .then((res) => {
             console.log(res.data);
             setReviews(res.data);
-            const imgurl = res.data.reviewimgurl[0].replace("/home/ftpuser", "");
-            setReviewImg(imgurl);
+
         })
         .catch((err) => {
             console.log(err);
@@ -119,14 +118,14 @@ const Review = (props: {postuser: string, postid: string}) => {
             <ul className="space-y-4">
                 {reviews.map((review) => (
                     <li key={review.reviewid} className="border border-gray-300 p-4 rounded-md">
-                        <ReviewBlock review={review} reviewImg={reviewImg} />
+                        <ReviewBlock review={review} />
                     </li>
                 ))}
             </ul>
             {session?.user?.email && session?.user?.email != props.postuser && (
                 <>
                     <form onSubmit={handleSubmit} className="mt-12">
-                        {imagePreview && (
+                        {/* {imagePreview && (
                             <div className="mt-2">
                                 <img src={imagePreview} alt="Preview" className="max-w-full h-auto rounded-md" />
                                 <button type="button" onClick={handleRemoveImage} className="bg-red-500 text-white rounded-sm p-1">
@@ -142,7 +141,7 @@ const Review = (props: {postuser: string, postid: string}) => {
                             multiple 
                             onChange={handleImageChange} 
                             className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        /> */}
                         <textarea id="attractionExplain" name="attractionExplain" value={newReview?.reviewcontent} onChange={(e) => handleInputChange(e)} 
                             className={`border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full ${
                                     charCount > maxLength ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'

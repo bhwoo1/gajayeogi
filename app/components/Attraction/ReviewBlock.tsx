@@ -5,13 +5,10 @@ import React, { useEffect, useState } from "react";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa6";
 import ImageModal from "./ImgaeModal";
 
-const ReviewBlock = (props: {review: ReviewData, reviewImg: string}) => {
+const ReviewBlock = (props: {review: ReviewData}) => {
     const {data: session} = useSession();
     const [editCommentMode, setEditCommentMode] = useState<boolean>(false);
 
-    useEffect(() => {
-        console.log(props.reviewImg);
-    }, [])
     
 
     const deleteComment = (reviewid: string, username: string) => {
@@ -34,7 +31,7 @@ const ReviewBlock = (props: {review: ReviewData, reviewImg: string}) => {
 
     return (
         <div className="relative flex flex-row w-full p-4 bg-white rounded-lg">
-            <div className="relative w-24 h-24 overflow-hidden rounded-lg">
+            {/* <div className="relative w-24 h-24 overflow-hidden rounded-lg">
                 {props.reviewImg && (
                     <div>
                         <img
@@ -44,7 +41,7 @@ const ReviewBlock = (props: {review: ReviewData, reviewImg: string}) => {
                         />
                     </div>
                 )}
-            </div>
+            </div> */}
             <div className="flex flex-col justify-between flex-grow ml-4 h-full">
                 <div className="mb-2 flex-shrink-0">
                     <p className="text-sm text-gray-500">
