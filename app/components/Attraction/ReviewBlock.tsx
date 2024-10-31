@@ -31,7 +31,7 @@ const ReviewBlock = (props: {review: ReviewData}) => {
     return (
         <div className="relative flex flex-row w-full p-4 bg-white rounded-lg">
             <div className="relative w-24 h-24 overflow-hidden rounded-lg">
-                {props.review.reviewimgurl && (
+                {props.review.reviewimgurl.length > 0 && (
                     <div>
                         <img
                             src={"https://gajayeogi.shop" + props.review.reviewimgurl}
